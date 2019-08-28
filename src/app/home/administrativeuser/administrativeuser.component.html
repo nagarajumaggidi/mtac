@@ -1,0 +1,126 @@
+<div class="app-title">
+  <div>
+    <h1><i class="fa fa-th-list"></i> Administrative Users</h1>
+  </div>
+  <ul class="app-breadcrumb breadcrumb">
+    <!-- <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li> -->
+
+
+  </ul>
+</div>
+
+
+
+<!-- Button trigger modal -->
+<div class="row">
+    <div class="col-md-3">
+      <div class="form-group">
+        <input type="text"  class="form-control" [(ngModel)]="term1" placeholder="Search Here...">
+      </div>
+    </div>
+    <div class="col-md-9">
+      <button type="button" style="margin-bottom:8px" class="btn btn-danger float-right" data-toggle="modal"
+        data-backdrop="static" data-target="#myModal" (click)="addModel(myform)">Add</button>
+    </div>
+  </div>
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel"> Administrative Users</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+
+
+
+        <form form [formGroup] = "myform" (ngSubmit)="onSubmit(myform)" autocomplete="on">
+ <div class="form-group">
+<label for="email">Email:</label>
+          <input type="email" class="form-control" formControlName="email" id="email" placeholder="Enter Email" name="email">
+          <span style="color:red" *ngIf = "myform.get('email').touched && myform.get('email').invalid">
+            <span *ngIf = "myform.get('email').errors.required">
+              Email is required
+            </span>
+            <span *ngIf = "myform.get('email').errors.minlength">
+                Min length  6 is required
+              </span>
+              <span *ngIf = "myform.get('email').errors.maxlength">
+                  Max length 25 is required
+                </span>
+                <span *ngIf = "myform.get('email').errors.pattern">
+                  Please provide @
+                </span>
+        
+        
+          </span>
+          </div>
+          
+
+
+ <div class="form-group">
+<label for="pwd">Password:</label>
+          <input type="password" class="form-control" formControlName="password" id="pwd" placeholder="Enter Password" name="pswd">
+          <span style="color:red" *ngIf = "myform.get('password').touched && myform.get('password').invalid">
+            <span *ngIf = "myform.get('password').errors.required">
+              Password is required
+            </span>
+            <span *ngIf = "myform.get('password').errors.minlength">
+                Min length  6 is required
+              </span>
+              <span *ngIf = "myform.get('password').errors.maxlength">
+                  Max length 25 is required
+                </span>
+               
+        
+        
+          </span>
+ </div>
+
+ 
+</form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" (click)="createUser(myform.value)"  data-dismiss="modal">Save</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<!-- Table -->
+<div class="row">
+  <div class="col-md-12"> 
+    <div class="tile">
+
+      <!-- <h3 class="tile-title"> Administrative Users</h3> -->
+      <div>
+        <table class="table ">
+          <thead>
+            <tr>
+              <th>Email</th>
+              <th>Role</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let x of adminUser | filter:term1 |paginate: { itemsPerPage: 5, currentPage: p }">
+              <td>{{x.username}}</td>
+              <td>Admin</td>
+              <td *ngIf="x.status == 'Active'"><span [ngClass]="{'status1': x.status=='Inactive', 'status2':x.status=='Active' }" (click)="statusAdministrative(x)">Disable</span></td>
+              <td *ngIf="x.status == 'Inactive'"><span [ngClass]="{'status1': x.status=='Inactive', 'status2':x.status=='Active' }" (click)="statusAdministrative(x)">Enable</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+    <pagination-controls (pageChange)="p = $event" class="pull-right"></pagination-controls>
+  </div>
+</div>

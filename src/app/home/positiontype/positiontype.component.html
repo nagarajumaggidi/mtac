@@ -1,0 +1,149 @@
+<div class="app-title">
+  <div>
+    <h1><i class="fa fa-th-list"></i> Position Type</h1>
+  </div>
+  <ul class="app-breadcrumb breadcrumb">
+  </ul>
+</div>
+<div class="row">
+  <div class="col-md-3">
+    <div class="form-group">
+      <input type="text" class="form-control" [(ngModel)]="term" placeholder="Search Here...">
+    </div>
+  </div>
+  <div class="col-md-9">
+    <button type="button" style="margin-bottom:8px" class="btn btn-danger float-right" data-toggle="modal"
+      data-backdrop="static" data-target="#myModal1" (click)="addEmployeementType(myForm)" >Add</button>
+  </div>
+</div>
+<div class="tile">
+  <!-- <h5>Position Type</h5> -->
+
+  <table class="table">
+    <thead>
+      <tr style="font-size:15px">
+        <!-- <th>Id</th> -->
+        <th>Position Type</th>
+        <!-- <th>LastUpdatedBy</th> -->
+        <th>Updated Date</th>
+        <th>Action</th>
+        <th>Edit</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- <tr *ngFor="let data of datas | filter:term |paginate: { itemsPerPage: 10, currentPage: p }"> -->
+      <tr *ngFor="let data of datas| filter:term |paginate: { itemsPerPage: 5, currentPage: p };let i=index">
+        <!-- <td>{{i+1}}</td> -->
+        <td>{{data.positionTypeName}}</td>
+        <!-- <td>{{data.lastUpdatedBy}}</td> -->
+        <td>{{data.updatedDate}}</td>
+        <td *ngIf="data.status == 'Active'"><span [ngClass]="{'status1': data.status=='Inactive', 'status2':data.status=='Active' }" (click)="activedata(data)">Disable</span></td>
+        <td *ngIf="data.status == 'Inactive'"><span [ngClass]="{'status1': data.status=='Inactive', 'status2':data.status=='Active' }" (click)="activedata(data)">Enable</span></td>
+        <td>
+          <span>
+            <span (click)="editPositionType(data.id)" data-toggle="modal" data-target="#myModal"
+              class="glyphicon glyphicon-pencil">
+              <i class="fa fa-edit" style="font-size:24px;color:rgb(49, 17, 233)"></i>
+            </span>
+          </span>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<pagination-controls (pageChange)="p = $event" class="pull-right"></pagination-controls>
+
+
+<div id="myModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <!-- Modal content-->
+    <form [formGroup]="positionTypeForm">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Update Position Type</h4>
+          <button type="button" class="close" data-dismiss="modal"  >&times;</button>
+        </div>
+        <div class="modal-body">
+
+            <div class="col-md-12">
+                <label>Position Type</label>
+                <input type="text" placeholder="Enter Position Type" formControlName="positionTypeName" class="form-control" 
+                name="positionTypeName">
+    
+                <span style="color:red" *ngIf = "positionTypeForm.get('positionTypeName').touched && 
+                positionTypeForm.get('positionTypeName').invalid">
+                  <span *ngIf = "positionTypeForm.get('positionTypeName').errors.required">
+                         Position Type is required
+                  </span>
+                    <!-- <span *ngIf = "positionTypeForm.get('positionTypeName').errors.pattern">
+                        Only Alphabets are allowed
+                    </span> -->
+                  </span>
+                 
+              </div>
+
+          <!-- <input type="text" formControlName="id" name="id" hidden> -->
+        </div>
+        <div class="modal-footer">
+            <!-- <button type="submit"   data-dismiss="modal"
+            class="btn btn-primary float-right" id="register" (submit)="addata(addforms.value)" 
+           >Submit</button> -->
+         <!--- <button type="submit" [disabled]="specialEventForm.invalid" data-dismiss="modal"
+            class="btn btn-primary float-right" id="register" (click)="saveEvent(specialEventForm)"
+           >Submit</button>-->
+          <button type="button" data-dismiss="modal"
+            class="btn btn-primary float-right" id="register" (click)="updateEvent(positionTypeForm.value)" [disabled]="positionTypeForm.invalid"
+            >Update</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+
+<!--add form start-->
+
+  <div id="myModal1" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <!-- Modal content-->
+      <div class="modal-content">
+        <form #myForm="ngForm">
+        <div class="modal-header">
+          <h4 class="modal-title">Add Position Type</h4>
+          <button type="button" class="close" data-dismiss="modal" (click)="myForm.reset()">&times;</button>
+        </div>
+        <div class="modal-body">
+
+            <div class="col-md-12">
+                <label>Position Type</label>
+        
+                 <input type="text" placeholder="Enter Position Type" [(ngModel)]="postionType" name="eventName"
+                  class="form-control" #positon="ngModel" required minlength="4">
+                  <span style="color:red" *ngIf="positon.invalid && positon.touched">
+                 
+           
+                   <span *ngIf="positon.errors.required">
+                    Positon is required.
+                   </span>
+                   <span *ngIf="positon.errors.minlength">
+                    Positon must be at least 4 characters long.
+                   </span>
+                  
+                 </span>
+                
+                 </div>
+         
+        </div>
+        <div class="modal-footer">
+          <button type="submit" data-dismiss="modal"
+            class="btn btn-primary float-right" id="register" (click)="addata(postionType)" [disabled]="myForm.invalid">Submit</button>
+        </div>
+      </form>
+      </div>
+    
+  </div>
+</div> 
+
+
+
+<!--add form end-->

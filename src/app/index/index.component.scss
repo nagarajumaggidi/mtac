@@ -1,0 +1,204 @@
+@import url('https://fonts.googleapis.com/css?family=Muli:400,700');
+
+.custom-sign-btn {
+    border-radius: 16px!important;
+    padding: .25rem .5rem!important;
+    font-size: .875rem!important;
+    line-height: 1.5!important;
+    background-color: #fff;
+    color: #b00404;
+}
+.modal-close {
+
+    background-color: #fff!important;
+    border-radius: 15px;
+    padding: 15px!important;
+    color: #506d85;
+    opacity: unset;
+    border: 0!important;
+    position: relative;
+    cursor: pointer !important;
+    left: 5em;
+}
+
+.cursor1
+{
+    cursor: pointer !important;
+}
+
+.modal-backdrop.fade {
+    opacity: 0.5;
+  }
+
+#loginModal
+{
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    padding-top: 100px; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0, 0, 0, 0.41); /* Black w/ opacity */
+}
+
+#reigsterModal
+{
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    padding-top: 100px; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0, 0, 0, 0.41); /* Black w/ opacity */
+}
+
+.button1{
+    width: 53px;
+    height: 33px;
+    margin-left: 0px;
+    margin-top: 30px;
+}
+@media (min-width: 768px){
+.col-md-4 {
+    flex: 0 0 33.3333333333%;
+    max-width: 33.3333333333%;
+    margin-top: 33px;
+}
+}
+
+.modal-close1
+{
+    background-color: #fff !important;
+    border-radius: 15px;
+    padding: 15px !important;
+    color: #506d85;
+    border: 0 !important;
+    position: fixed;
+    top:20px;
+    right:40px;
+    cursor: pointer !important;
+    z-index:99999;
+}
+
+.buttonlink
+{
+    color:#157ac1 !important;
+}
+
+.cursor1
+{
+    font-size:20px;
+}
+.btn-block {
+    display: block;
+    width: 75%;
+}
+ .Register-Now {
+    font-family: Muli!important;
+    font-size: 22px!important;
+    font-weight: 700!important;
+    font-style: normal!important;
+    font-stretch: normal!important;
+    line-height: normal!important;
+    letter-spacing: normal!important;
+    color: #292c30!important;
+ }
+ .modal-sign-in-h6 {
+    font-family: Muli;
+    font-size: 18px;
+    font-weight: 700;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    color: #292c30;
+}
+.btn-modal-register, .btn-modal-sign-in {
+    border-radius: 32px;
+    background-color: #ff9429;
+    color: #fff;
+    padding: .375rem 2rem;
+}
+.btn:hover {
+    color: #212529;
+    text-decoration: none;
+}
+.modal-popup-already {
+    font-family: Muli;
+    font-size: 14px;
+    font-weight: 700;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    color: #506d85;
+}
+.modal-popup-sign-in {
+    font-family: Muli;
+    font-size: 14px;
+    font-weight: 700;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    color: #00b9f5;
+    display: block;
+}
+
+#sign1,#sign
+{
+    display:none;
+}
+.wait
+{
+    color:red;
+}
+.wait i
+{
+    color:red;
+}
+
+
+
+
+
+
+
+
+
+// .capt{
+// 	background-color:grey;
+// 	width: 300px;
+// 	height:100px;
+	
+// }
+
+// #mainCaptcha{
+// 	position: relative;
+// 	left : 60px;
+// 	top: 5px;
+	
+// }
+
+// #refresh{
+// 	position:relative;
+// 	left:230px;
+// 	width:30px;
+// 	height:30px;
+// 	bottom:45px;
+	
+// }
+
+// #txtInput, #Button1{
+// 	position: relative;
+// 	left:40px;
+// 	bottom: 40px;
+// }

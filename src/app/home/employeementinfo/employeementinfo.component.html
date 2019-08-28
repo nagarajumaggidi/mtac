@@ -1,0 +1,860 @@
+<div class="container" style="margin-top: 10px;">
+  <div class="row">
+  
+    <!-- ------------------------------------------------------------- -->
+    <div class="col-md-12">
+
+      <div class="card">
+        <div class="card-body">
+
+          <form [formGroup]="myform" autocomplete="on" enctype="multipart/form-data">
+
+            <div class="row">
+              <div class="col-md-8">
+                <h5>Employment Information:</h5><br>
+              </div>
+            </div>
+            <hr>
+
+            <!-- ----------------------------------------- -->
+
+            <label>Present Employment</label>
+
+            <div class="row">
+              <div class="col-md-4 ">
+                <div class="radio-inline">
+                  <input type="radio" value="true" class="form-check-input"
+                    (click)="changevalue(true)" formControlName="presentEmployment" [value]="true" name="presentEmployment">Yes
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="radio-inline">
+                  <input type="radio" value="false" class="form-check-input"
+                    (click)="changevalue(false)" formControlName="presentEmployment" [value]="false" name="presentEmployment">No
+                </div>
+              </div>
+
+            </div>
+            <br>
+
+            <!-- ----------------------------------------- -->
+
+
+            <div *ngIf="isvalid">
+
+              <div class="row">
+
+                <div class="col-md-8">
+                  <label>If Yes, then all the below are mandatory<span style="color:red;">*</span></label><br><br>
+
+                  <label>Name of Employer</label>
+                  <input type="text" class="form-control" name="Name of Employer" placeholder="Enter Name"
+                    formControlName="NameofEmp">
+                  <span style="color:red" *ngIf="myform.get('NameofEmp').touched && myform.get('NameofEmp').invalid">
+                    <span *ngIf="myform.get('NameofEmp').errors.required">
+                      Name of Employer is required
+                    </span>
+                  </span>
+                  <br>
+
+
+                  <label>Current Designation</label>
+                  <select class="form-control" formControlName="designation">
+                    <option value="" disabled selected>Please Select Current Designation</option>
+                    <option *ngFor="let designation of designationList" [value]="designation.id">
+                      {{designation.designationName}}</option>
+                  </select>
+                  <span style="color:red"
+                    *ngIf="myform.get('designation').touched && myform.get('designation').invalid">
+                    <span *ngIf="myform.get('designation').errors.required">
+                      Current designation is required
+                    </span>
+                  </span>
+
+                  <br>
+
+                  <label>Employment Type </label>
+                  <select class="form-control" formControlName="Employment">
+                    <option value="" disabled selected>Please select Employment Type</option>
+                    <option *ngFor="let e of employeementlist" [value]="e.id">{{e.employmentName}}</option>
+                  </select>
+                  <span style="color:red" *ngIf="myform.get('Employment').touched && myform.get('Employment').invalid">
+                    <span *ngIf="myform.get('Employment').errors.required">
+                      Employment Type is required
+                    </span>
+                  </span>
+
+                  <br>
+
+                </div>
+
+              </div>
+
+
+              <div class="row">
+                <div class="col-md-6">
+                  <label>Pay and Grade<span style="color:red;">*</span></label>
+                  <input type="number" class="form-control" placeholder="Enter Pay and Grade"
+                    formControlName="PayandGrade" name="Grade">
+                  <span style="color:red"
+                    *ngIf="myform.get('PayandGrade').touched && myform.get('PayandGrade').invalid">
+                    <span *ngIf="myform.get('PayandGrade').errors.required">
+                      Pay and Grade is required
+                    </span>
+                  </span>
+                </div>
+                <br>
+                <div class="col-md-6">
+                  <label>Date of Next Increment<span style="color:red;">*</span></label>
+                  <input type="date" class="form-control" placeholder="Date of Next Increment"
+                    formControlName="DateOfIncrement" name="DateOfIncrement">
+                  <span style="color:red"
+                    *ngIf="myform.get('DateOfIncrement').touched && myform.get('DateOfIncrement').invalid">
+                    <span *ngIf="myform.get('DateOfIncrement').errors.required">
+                      Date of Next Increment is required
+                    </span>
+                  </span>
+                </div>
+              </div>
+              <br>
+
+              <div class="row">
+                <div class="col-md-12">
+                  <label> Have you obtained prior permission of your present employer for submitting
+                    this application? <span style="color:red;">*</span></label>
+                  <div class="row">
+                    <div class="col-md-4">
+                      <div class="radio-inline">
+                        <input type="radio" formControlName="presentEmployer" name="presentEmployer"
+                          class="form-check-input" [value]="true">Yes
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div class="radio-inline">
+                        <input type="radio" formControlName="presentEmployer" name="presentEmployer"
+                          class="form-check-input" [value]="false">No
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <br>
+
+
+              <div class="row">
+                <div class="col-md-8">
+                  <label> Basic pay acceptable, if selected (in numbers)<span style="color:red;">*</span></label>
+                  <input type="number" class="form-control" placeholder="Basic pay" formControlName="BasicPay"
+                    name="BasicPay">
+                  <span style="color:red" *ngIf="myform.get('BasicPay').touched && myform.get('BasicPay').invalid">
+                    <span *ngIf="myform.get('BasicPay').errors.required">
+                      Basic pay acceptable is required
+                    </span>
+                  </span>
+                </div>
+              </div>
+              <br>
+
+              <div class="row">
+                <div class="col-md-8">
+                  <label> Period required for joining the post, if appointed (Notice Period in days) <span
+                      style="color:red;">*</span></label>
+                  <input type="number" class="form-control" placeholder="Notice Period" formControlName="NoticePeriod"
+                    name="Notice Period">
+                  <span style="color:red"
+                    *ngIf="myform.get('NoticePeriod').touched && myform.get('NoticePeriod').invalid">
+                    <span *ngIf="myform.get('NoticePeriod').errors.required">
+                      Notice Period is required
+                    </span>
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            <div *ngIf="!isvalid">
+
+            </div>
+            <hr>
+
+
+
+            <!-- ----------------------------------------- -->
+
+
+            <div class="row">
+              <div class="col-md-12">
+                <label> Have you ever been disqualified from Appearing in any University Examination/
+                  Undertaking University work <span style="color:red;">*</span></label>
+                <div class="row">
+                  <div class="col-md-4">
+                    <div class="radio-inline">
+                      <input type="radio" class="form-check-input" name="disqualified" formControlName="disqualified"
+                        [value]="true" checked>Yes
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="radio-inline">
+                      <input type="radio" class="form-check-input" name="disqualified" formControlName="disqualified"
+                        [value]="false">No
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <br>
+
+            <!-- ----------------------------------------- -->
+
+
+            <div class="row">
+              <div class="col-md-12">
+                <label> Are you a dismissed employee? <span style="color:red;">*</span></label>
+                <div class="row">
+                  <div class="col-md-4">
+                    <div class="radio-inline">
+                      <input type="radio" class="form-check-input" id="open" name="dismissed"
+                        formControlName="dismissed" [value]="true">Yes
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="radio-inline">
+                      <input type="radio" class="form-check-input" id="reserved" name="dismissed"
+                        formControlName="dismissed" [value]="false">No
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <br>
+
+            <!-- ----------------------------------------- -->
+
+            <div class="row">
+              <div class="col-md-12">
+                <label> Whether any criminal case has been registered against applicant <span
+                    style="color:red;">*</span></label>
+                <div class="row">
+                  <div class="col-md-4">
+                    <div class="radio-inline">
+                      <input type="radio" class="form-check-input" id="open" name="Criminalcase"
+                        formControlName="Criminalcase" [value]="true">Yes
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="radio-inline">
+                      <input type="radio" class="form-check-input" id="reserved" name="Criminalcase"
+                        formControlName="Criminalcase" [value]="false">No
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <br>
+            <hr>
+
+            <!-- ----------------------------------------- -->
+
+            <div class="row">
+              <div class="col-md-12">
+                <label> Whether you have been charge-sheeted for any criminal offence?<span
+                    style="color:red;">*</span></label>
+                <div class="row">
+                  <div class="col-md-4">
+                    <div class="radio-inline">
+                      <input type="radio" value="Male" (click)="setradio(true)" class="form-check-input"
+                        name="chargesheet" formControlName="chargesheet" [value]="true"> Yes
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="radio-inline">
+                      <input type="radio" value="Male" (click)="setradio(false)" class="form-check-input"
+                        name="chargesheet" formControlName="chargesheet" [value]="false">No
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <br>
+
+
+            <div class="row" *ngIf="set">
+              <div class="col-md-12">
+                <label> If yes, Enter the details<span style="color:red;">*</span></label>
+                <input type="text" class="form-control" [disabled]="status" formControlName="chargesheeted"
+                  name="chargesheeted">
+                <span style="color:red"
+                  *ngIf="myform.get('chargesheeted').touched && myform.get('chargesheeted').invalid">
+                  <span *ngIf="myform.get('chargesheeted').errors.required">
+                    Charge sheet is required
+                  </span>
+                </span>
+              </div>
+            </div>
+
+            <div class="row" *ngIf="!set">
+            </div>
+            <br>
+            <hr>
+
+            <!-- ----------------------------------------- -->
+
+
+
+            <div class="row">
+              <div class="col-md-12">
+                <label> Whether you have been convicted by any competent court for any criminal offence?
+                  <span style="color:red;">*</span></label>
+                <div class="row">
+                  <div class="col-md-4">
+                    <div class="radio-inline">
+                      <input type="radio" name="convicted" class="form-check-input" (click)="setvalue(true)"
+                        formControlName="convicted" [value]="true">Yes
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="radio-inline">
+                      <input type="radio" name="convicted" class="form-check-input" (click)="setvalue(false)"
+                        formControlName="convicted" [value]="false">No
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <br>
+            <div class="row" *ngIf="value">
+              <div class="col-md-12">
+                <label> If yes, Enter the details<span style="color:red;">*</span></label>
+                <input type="text" class="form-control" formControlName="convicteddetails" name="convicteddetails">
+                <span style="color:red"
+                  *ngIf="myform.get('convicteddetails').touched && myform.get('convicteddetails').invalid">
+                  <span *ngIf="myform.get('convicteddetails').errors.required">
+                    Criminal offence details are required
+                  </span>
+                </span>
+              </div>
+            </div>
+
+            <div class="row" *ngIf="!value">
+            </div>
+            <br>
+            <hr>
+
+            <!-- ----------------------------------------- -->
+
+            <strong>Reference:</strong>
+            <i> (These persons should be professionally competent,
+              who are well acquainted with some aspect of the applicant’s training accomplishment,
+              capabilities and character but must not be in blood relation to the candidate. Two
+              references should be listed)
+            </i>
+
+
+            <br>
+            <hr>
+            <div class="row">
+              <div class="col-md-6">
+
+                <div formArrayName="reference" *ngFor="let data of myform.controls.reference.controls;let i=index;">
+
+                  <div [formGroupName]="i">
+                    <br />
+                    <strong>Reference </strong>
+                    <br />
+                    <button class="btn btn-danger pull-right btn2" (click)="remove(i)"
+                      *ngIf="myform.get('reference').length>1"><i class="fa fa-times"></i></button>
+                    <br />
+                    <div class="col-md-12">
+                      <label> Name <span style="color:red;">*</span></label>
+                      <input type="text" class="form-control" formControlName="name" name="name" required>
+                        <span *ngIf="myform.referenceName?.errors.required">
+                          Reference name is required
+                        </span>
+                      
+                    </div>
+
+                    <div class="col-md-12">
+                      <label> Occupation or Position <span style="color:red;">*</span></label>
+                      <input type="text" class="form-control" formControlName="position" name="position" required>
+                      <span *ngIf="myform.occupation?.errors.required">
+                          Reference name is required
+                        </span>
+                    </div>
+                    <div class="col-md-12">
+                      <label> Address <span style="color:red;">*</span></label>
+                      <input type="text" class="form-control" formControlName="address" name="address" required>
+                      <span *ngIf="myform.Address?.errors.required">
+                          Reference name is required
+                        </span>
+                    </div>
+                    <div class="col-md-12">
+                      <label> Email <span style="color:red;">*</span></label>
+                      <input type="text" class="form-control" formControlName="email" name="email" required>
+                      <span *ngIf="myform.Email?.errors.required">
+                          Reference name is required
+                      </span>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
+            <!--  
+               </div> -->
+            <br>
+
+            <div class="row" *ngIf="showSelected">
+              <div class="col-md-6">
+
+                <strong>Reference 2:</strong><br>
+
+                <div class="col-md-12">
+                  <label> Name <span style="color:red;">*</span></label>
+                  <input type="text" class="form-control" formControlName="referenceName2" name="reference Name">
+
+                  <span style="color:red"
+                    *ngIf="myform.get('referenceName2').touched && myform.get('referenceName2').invalid">
+                    <span *ngIf="myform.get('referenceName2').errors.required">
+                      Reference name is required
+                    </span>
+                  </span>
+                </div>
+
+                <div class="col-md-12">
+                  <label> Occupation or Position <span style="color:red;">*</span></label>
+                  <input type="text" class="form-control" formControlName="occupation2" name="occupation">
+                  <span style="color:red"
+                    *ngIf="myform.get('occupation2').touched && myform.get('occupation2').invalid">
+                    <span *ngIf="myform.get('occupation2').errors.required">
+                      Reference Occupation or Positionname is required
+                    </span>
+                  </span>
+                </div>
+                <div class="col-md-12">
+                  <label> Address <span style="color:red;">*</span></label>
+                  <input type="text" class="form-control" formControlName="Address2" name="Address">
+                  <span style="color:red" *ngIf="myform.get('Address2').touched && myform.get('Address2').invalid">
+                    <span *ngIf="myform.get('Address2').errors.required">
+                      Reference Address is required
+                    </span>
+                  </span>
+                </div>
+                <div class="col-md-12">
+                  <label> Email <span style="color:red;">*</span></label>
+                  <input type="text" class="form-control" formControlName="Email2" name="Email">
+                  <span style="color:red" *ngIf="myform.get('Email2').touched && myform.get('Email2').invalid">
+                    <span *ngIf="myform.get('Email2').errors.required">
+                      Reference Email is required
+                    </span>
+                  </span>
+                </div>
+
+              </div>
+            </div>
+            <br>
+
+
+
+            <button class="btn btn-primary ml-3" (click)="addmore()">Add More Reference</button>
+            <!-- <button (click)="addReference()"></button>  -->
+            <br>
+            <br>
+            <hr>
+
+            <!-- ----------------------------------------- -->
+
+            <strong>Educational qualifications (Exact marks and % should be filled, no rounding should be
+              there)</strong>
+            <br>
+
+            <hr>
+            <br>
+
+            <div class="qualification" formArrayName="qualification"
+              *ngFor="let data of myform.get('qualification')['controls'];let i=index;">
+
+              <div class="row" [formGroupName]="i">
+
+                <button class="btn btn-danger pull-right btn2 btn3" (click)="removequalification(i)"><i
+                    class="fa fa-times"></i></button>
+
+                  <div class="col-md-6">
+                  <label>Qualification </label>
+                  <select class="form-control" formControlName="qualification" name="qualification">
+                    <option value="" disabled selected>Please Select Qualification</option>
+                    <option>10th(SSC)</option>
+                    <option>12th(HSC)</option>
+                    <option>Under Graduate (UG)</option>
+                    <option>Post Graduate (PG)</option>
+                  </select>
+                  <!-- <span style="color:red"
+                    *ngIf="myform.get('qualifications').touched && myform.get('qualifications').invalid">
+                    <span *ngIf="myform.get('qualifications').errors.required">
+                      Qualification is required
+                    </span>
+                  </span> -->
+                </div>
+                <div class="col-md-6">
+                  <label>Group</label>
+                  <input type="text" class="form-control" formControlName="subjects" name="subjects"
+                    placeholder="Please enter the Group">
+                  <!-- <span style="color:red" *ngIf="myform.get('group').touched && myform.get('group').invalid">
+                    <span *ngIf="myform.get('group').errors.required">
+                      Please enter the field
+                    </span>
+                  </span> -->
+                </div>
+             
+              
+
+                <div class="col-md-6">
+                  <label>University/Board/Dept.from which passed</label>
+                  <input type="text" class="form-control" formControlName="board" name="board"
+                    placeholder="University/Board/Dept.from which passed" />
+                  <!-- <span style="color:red" *ngIf="myform.get('University').touched && myform.get('University').invalid">
+                    <span *ngIf="myform.get('University').errors.required">
+                      University is required
+                    </span>
+                  </span> -->
+                </div>
+
+                <div class="col-md-6">
+                  <label>Year of Passing </label>
+                  <select class="form-control" formControlName="yearPassing" name="yearPassing">
+                    <option>2012</option>
+                    <option>2013</option>
+                    <option>2014</option>
+                    <option>2015</option>
+                    <option>2016</option>
+                    <option>2017</option>
+                  </select>
+                  <!-- <span style="color:red"
+                    *ngIf="myform.get('YearofPassing').touched && myform.get('YearofPassing').invalid">
+                    <span *ngIf="myform.get('YearofPassing').errors.required">
+                      Year of Passing is required
+                    </span>
+                  </span> -->
+                </div>
+           
+            <br/>
+
+                         
+               <div class="col-md-6">
+                 <label>Division <span style="color:red;">*</span></label>
+                 <select class="form-control" formControlName="classOfDivision" name="classOfDivision">
+                   <option>Ist</option>
+                   <option>2nd</option>
+                   <option>3rd</option>
+                 </select>
+               </div>
+                
+                <div class="col-md-6">
+                  <label>CGPA/Scale/Max Marks</label>
+                  <input type="number" class="form-control" placeholder="Enter Number" formControlName="maxMarks" name="maxMarks">
+                  <!-- <span style="color:red" *ngIf="myform.get('cgpa').touched && myform.get('cgpa').invalid">
+                    <span *ngIf="myform.get('cgpa').errors.required">
+                      cgpa is required
+                    </span>
+                  </span> -->
+
+                </div>
+                <div class="col-md-6 ">
+                  <label>Obtained CGPA/Obtained Marks </label>
+                  <input type="number" class="form-control" placeholder="Enter Number" formControlName="obtinedMarks" name="obtinedMarks">
+                  <!-- <span style="color:red"
+                    *ngIf="myform.get('cgpaobtained').touched && myform.get('cgpaobtained').invalid">
+                    <span *ngIf="myform.get('cgpaobtained').errors.required">
+                      please enter the field
+                    </span>
+                  </span> -->
+                </div>
+              <br>
+
+                <div class="col-md-6">
+                  <label>Percentage of marks Obtained<span style="color:red;">*</span></label>
+                  <input type="text" class="form-control" placeholder="Enter Number" formControlName="percentage" name="percentage">
+                </div>
+                <div class="col-md-6">
+                  <label>distinction<span style="color:red;">*</span></label>
+                  <input type="text" class="form-control" placeholder="Enter destinction" formControlName="distinction"
+                    name="distinction">
+                </div>
+              
+              <br>
+
+                 <div class="col-md-6">
+                  <label>Certificate<span style="color:red;">*</span></label>
+                  <input type="file" class="form-control"   [id]="'file'+i" (change)="handleFileSelect(file,$event,i)" name="file">
+                  <img [src]="'data:image/jpg;base64,'" alt="path not correct"/>
+                 </div> 
+
+              <br>
+
+            </div>
+            </div>
+
+            <br/>
+            <button class="btn btn-primary" (click)="addqualification()">Add More Exam</button>
+            <hr>
+          
+            <!-- ----------------------------------------- -->
+            <br>
+            <hr>
+            <!-- ----------------------------------------- -->
+
+            <p><b>Total Experience:</b> To be mentioned from the date of meeting the eligibility requirement of the post applied.</p>
+
+            <hr>
+            <br>
+
+
+            
+            <!----Total Experience start-->
+
+            <div class="qualification" formArrayName="experiencedetails"
+               *ngFor="let data of myform.get('experiencedetails')['controls'];let i=index;">
+
+             <div class="row" [formGroupName]="i">
+
+              <button class="btn btn-danger pull-right btn2 btn3" (click)="removetotalexperience(i)"><i
+                  class="fa fa-times"></i></button>
+
+                <div class="col-md-6">
+                <label>Name of employer / Institution</label>
+                <input type="text" class="form-control" formControlName="nameOfEmployer" name="nameOfEmployer" placeholder="Please enter the Group">
+                <!-- <span style="color:red"
+                  *ngIf="myform.get('qualifications').touched && myform.get('qualifications').invalid">
+                  <span *ngIf="myform.get('qualifications').errors.required">
+                    Qualification is required
+                  </span>
+                </span> -->
+              </div>
+
+              <div class="col-md-6">
+                <label>Designation</label>
+                <input type="text" class="form-control" formControlName="designation" name="designation"
+                  placeholder="Designation">
+                <!-- <span style="color:red" *ngIf="myform.get('group').touched && myform.get('group').invalid">
+                  <span *ngIf="myform.get('group').errors.required">
+                    Please enter the field
+                  </span>
+                </span> -->
+              </div>
+           
+            
+
+              <div class="col-md-6">
+                  <label>employmentType</label>
+                  <select class="form-control" formControlName="employmentType" name="employmentType">
+                  <option value="" disabled selected>employmentType</option>
+                    <option>Present</option>
+                    <option>permenent</option>
+                  </select>
+                <!-- <span style="color:red"
+                  *ngIf="myform.get('YearofPassing').touched && myform.get('YearofPassing').invalid">
+                  <span *ngIf="myform.get('YearofPassing').errors.required">
+                    Year of Passing is required
+                  </span>
+                </span> -->
+              </div>
+         
+          <br/>
+           
+              <div class="col-md-6">
+                <label>Pay scale/total salary</label>
+                <input type="number" class="form-control" placeholder="pay" formControlName="pay" name="pay">
+                <!-- <span style="color:red" *ngIf="myform.get('cgpa').touched && myform.get('cgpa').invalid">
+                  <span *ngIf="myform.get('cgpa').errors.required">
+                    cgpa is required
+                  </span>
+                </span> -->
+
+              </div>
+              <div class="col-md-6 ">
+                <label>Number of years </label>
+                <input type="number" class="form-control" placeholder="Enter Number of years" formControlName="numberOfYears" name="numberOfYears">
+                <!-- <span style="color:red"
+                  *ngIf="myform.get('cgpaobtained').touched && myform.get('cgpaobtained').invalid">
+                  <span *ngIf="myform.get('cgpaobtained').errors.required">
+                    please enter the field
+                  </span>
+                </span> -->
+              </div>
+            <br>
+
+          </div>
+          </div>
+
+          <br/>
+          <button class="btn btn-primary" (click)="addmoretotal()">Add More Experience</button>
+      
+
+            <!----Total Experience end-->
+
+           <!-----prize start--->
+
+            <!-- ----------------------------------------- -->
+
+            <hr>
+
+            <!-- ----------------------------------------- -->
+
+            <p>Give Particulars of Prize, Medal and Merit won, distinctions, if any</p>
+
+            <hr>
+            
+
+           <div class="qualification" formArrayName="achievements"
+           *ngFor="let data of myform.get('achievements')['controls'];let i=index;">
+
+            <div [formGroupName]="i">
+            
+              <button class="btn btn-danger pull-right btn2 btn3 prize" (click)="removeprize(i)"><i
+                class="fa fa-times"></i></button>
+
+              <div class="row">
+              <div class="col-md-8">
+                <label>Give Particulars of Prize, Medal and Merit won, distinctions, if any <span
+                    style="color:red;">*</span></label>
+                <input type="text" class="form-control" placeholder="Prize, Medal and Merit"
+                  formControlName="achievementDetails" name="achievementDetails" required>
+
+                            <!-- <span *ngIf="myform.MedalandMerit?.errors.required">
+                    Prize, Medal and Merit won is required
+                  </span> -->
+
+              </div>
+            </div>
+          </div>
+          </div>
+        
+          <br/>
+          <button class="btn btn-primary" (click)="addmoreprizes()">Add More prizes</button>
+          <hr>
+
+            <!-----prize end--->
+
+          <hr>
+          <!-- ----------------------------------------- -->
+        
+          <p>List of the certificates (attested copies) attached</p>
+        
+          <hr>
+            
+           <!-----certificates start--->
+
+           <div formArrayName="certificates"
+           *ngFor="let data of myform.get('certificates')['controls'];let i=index;">
+
+           <div class="row" [formGroupName]="i">
+
+               <div class="col-md-6">
+                  <label>Desctiption</label>
+                  <input type="text" class="form-control" formControlName="certificateName" name="certificateName">
+              </div>
+              
+
+              <div class="col-md-6">
+                  <label>file upload</label>
+                  <input type="file" class="form-control"  [id]="'file'+i" (change)="handleFileSelect(file,$event,i)" name="file">
+              </div>
+
+          </div>
+          </div>
+          
+          <br/>
+      
+          <button class="btn btn-primary" (click)="addmorecertificate()">Add More certifcate </button>
+      
+
+            <!-----certificates end--->
+
+              <hr>
+
+            <!--addition information start-->
+
+            <div class="row">
+              <div class="col-md-12">
+                <label> Additional Information <span style="color:red;">*</span></label>
+                <textarea type="textarea" class="form-control" rows="5" formControlName="AdditionalInformation"
+                  name="AdditionalInformation"> </textarea>
+                <!-- <span style="color:red"
+                  *ngIf="myform.get('AdditionalInformation').touched && myform.get('AdditionalInformation').invalid">
+                  <span *ngIf="myform.get('AdditionalInformation').errors.required">
+                    Additional Information is required
+                  </span>
+                </span> -->
+              </div>
+            </div>
+            <br />
+
+            
+            <!--addition information end-->
+
+
+              <p> &nbsp; &nbsp; &nbsp; I certify that the information given above & in the enclosed document are true to the best of my knowledge 
+               and belief and nothing has been concealed therein. I am aware of the fact that if the information given by me is 
+               proved false/not true, I will have to face the criminal proceedings as per provision of Section 177, 197, 198, 199 a
+               nd 200 of IPC & any other suitable provision of the Law. Also all the benefit availed by me shall be summarily 
+               withdrawn and my application shall liable for disqualification.
+              </p>
+
+
+            <div class="form-group">
+              <div class="row">
+
+                  <div class="col-md-4">
+                  <label>place:</label><br />
+                  <input type="text" class="form-control" formControlName="place"/>
+                  <label>date:</label><br />
+                  <input type="date" class="form-control" formControlName="date"/>
+
+        
+                </div>
+
+                <div class="col-md-4">
+
+                  <label class="signature">Image Upload :</label><br />
+      
+                  <!-- for upload button -->
+                  <div class="input-group" style="margin-top:10px ">
+                    <!-- <input  type="file" accept='image/*' (change)="image_method($event)" /> -->
+                    <input name="file" type="file" (change)="image_method($event)">
+                    <img [src]="'data:image/jpg;base64,'+ImageData?.changingThisBreaksApplicationSecurity" alt="path not correct" />
+                     <!-- <input type="hidden" name="fileHidden" formControlName="imageInput"/> -->
+                  </div>
+                
+                  </div>
+
+                  <div class="col-md-4">
+                  <label class="signature">Sign Upload :</label><br />
+                 
+                  <!-- for upload button -->
+                  <div class="input-group" style="margin-top:10px ">
+                    <input name="file"  type="file" (change)="sign_method($event)"/>
+                    <img [src]="'data:image/jpg;base64,'+signImg?.changingThisBreaksApplicationSecurity" alt="path not correct" />
+                  </div>
+                </div>
+              </div>
+          
+            </div>
+            <br>
+            <br>
+            <!-- ----------------------------------------- -->
+
+            <div>
+              <button type="button" class="btn btn-primary" (click)="submit()">Save and
+                Continue</button>&nbsp;
+              <button type="button" class="btn btn-primary">Save As Draft</button>&nbsp;
+              <!-- <button type="button" class="btn btn-primary">Edit</button>&nbsp; -->
+              <!-- <button type="button" class="btn btn-primary" [disabled]="!fixedForm.valid" (click)="pageRouting();">
+                Preview 
+                   </button>&nbsp; -->
+              <!-- <button type="button" class="btn btn-primary">Finish and Make Payment</button>&nbsp; -->
+            </div>
+
+
+          </form>
+        </div>
+      </div>
+    </div>

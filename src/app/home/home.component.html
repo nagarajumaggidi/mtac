@@ -1,0 +1,170 @@
+<div class="app sidebar-mini rtl">
+
+  <header class="app-header" *ngIf="role=='ADMIN'">
+
+    <div class="logo logo_three">
+      <a href="#"><img src="assets/img/img/logo.png" style="width: 169px;
+          margin-top: -14px;
+          margin-left: -21px;" alt=""></a>
+    </div>
+
+    <!-- Sidebar toggle button--><a class="app-sidebar__toggle" href="#" style="margin-left: 220px;"
+      data-toggle="sidebar" aria-label="Hide Sidebar"></a>
+    <!-- Navbar Right Menu-->
+    <ul class="app-nav">
+      <!--Notification Menu-->
+      <!-- User Menu-->
+      <li class="dropdown"><a class="app-nav__item" href="#" data-toggle="dropdown" aria-label="Open Profile Menu"><i
+            class="fa fa-user fa-lg"></i></a>
+        <ul class="dropdown-menu settings-menu dropdown-menu-right">
+          <li (click)="logoutAction()"><a class="dropdown-item" href=""><i class="fa fa-sign-out fa-lg"></i> Logout</a>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </header>
+
+  <header class="app-header1" *ngIf="role=='USER'">
+
+      <div class="logo logo_three">
+        <a href="#"></a>
+      </div>
+
+      <p>Application Form</p>
+      <!-- Navbar Right Menu-->
+      <ul class="app-nav">
+  
+      
+        <li class="dropdown"><a class="app-nav__item" href="#" data-toggle="dropdown" aria-label="Open Profile Menu"><i class="fa fa-user fa-lg"></i></a>
+          <ul class="dropdown-menu settings-menu dropdown-menu-right">
+            <li (click)="logoutAction()"><a class="dropdown-item" href=""><i class="fa fa-sign-out fa-lg"></i> Logout</a>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </header>
+
+  
+  
+  <!-- Sidebar menu-->
+  <div class="app-sidebar__overlay" data-toggle="sidebar"></div>
+  <aside class="app-sidebar" *ngIf="role=='ADMIN'">
+    <div class="text-center" class="app-sidebar__user"><span style="color:white;
+        font-size: 35px;">
+        <i class="fa fa-user" aria-hidden="true"></i></span>&nbsp;&nbsp;
+      <p class="text-center app-sidebar__user-name">{{username}}</p>
+    </div>
+
+    <ul class="app-menu">
+      <!-- <li><a class="app-menu__item active" routerLink="/dashboard" routerLinkActive="active"><i
+            class="app-menu__icon fa fa-dashboard"></i><span class="app-menu__label">Dashboard</span></a></li> -->
+
+      <li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><i
+            class="app-menu__icon fa fa-edit"></i><span class="app-menu__label">Management</span><i
+            class="treeview-indicator fa fa-angle-right"></i></a>
+        <ul class="treeview-menu">
+          <li><a class="treeview-item" routerLink="/registered" routerLinkActive="active"><i
+                class="icon fa fa-users"></i>&nbsp;Registered Candidate</a></li>
+          <li><a class="treeview-item" routerLink="/administrativeuser" routerLinkActive="active"><i
+                class="icon fa fa-user"></i>&nbsp;Administrative Users</a></li>
+          <li><a class="treeview-item" routerLink="/employementtype" routerLinkActive="active"><i
+                class="icon fa fa-users"></i>&nbsp;Employment Type</a></li>
+          <li><a class="treeview-item" routerLink="/positiontype" routerLinkActive="active"><i
+                class="icon fa fa-quora"></i>&nbsp;Position Type</a></li>
+
+          <li><a class="treeview-item" routerLink="/positions" routerLinkActive="active"><i
+                class="icon fa fa-calendar"></i>&nbsp;Position</a></li>
+          <li><a class="treeview-item" routerLink="/category" routerLinkActive="active"><i class="fa fa-hand-o-up"
+                aria-hidden="true"></i>&nbsp;Category</a></li>
+          <li><a class="treeview-item" routerLink="/feestructure" routerLinkActive="active"><i class="fa fa-hand-o-up"
+                aria-hidden="true"></i>&nbsp;Fee Structure</a></li>
+          <li><a class="treeview-item" routerLink="/designation" routerLinkActive="active"><i
+                class="icon fa fa-user"></i>Designation</a></li>
+          <li><a class="treeview-item" routerLink="/applicationlist" routerLinkActive="active"><i
+                class="icon fa fa-user"></i>Application List</a></li>
+        </ul>
+
+      </li>
+      <hr>
+      <li><a class="app-menu__item" href="" (click)="logoutAction()"><i class="app-menu__icon fa fa-sign-out"></i><span
+            class="app-menu__label">Logout</span></a></li>
+    </ul>
+    <ul class="app-menu" *ngIf="role=='COMMISSIONERUSER'">
+      <li><a class="app-menu__item active" routerLink="/dashboard" routerLinkActive="active"><i
+            class="app-menu__icon fa fa-dashboard"></i><span class="app-menu__label">Dashboard</span></a></li>
+
+      <li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><i
+            class="app-menu__icon fa fa-edit"></i><span class="app-menu__label">Management</span><i
+            class="treeview-indicator fa fa-angle-right"></i></a>
+        <ul class="treeview-menu">
+          <li><a class="treeview-item" routerLink="/sponsordetail" routerLinkActive="active"><i
+                class="icon fa fa-user"></i>Commissioner</a></li>
+          <li><a class="treeview-item" routerLink="/servicerequest" routerLinkActive="active"><i
+                class="icon fa fa-user"></i>Order Request</a></li>
+        </ul>
+
+      </li>
+      <hr>
+      <li><a class="app-menu__item" href="" (click)="logoutAction()"><i class="app-menu__icon fa fa-sign-out"></i><span
+            class="app-menu__label">Logout</span></a></li>
+    </ul>
+    <ul class="app-menu" *ngIf="role=='SUPPORTUSER'">
+      <li><a class="app-menu__item active" routerLink="/dashboard" routerLinkActive="active"><i
+            class="app-menu__icon fa fa-dashboard"></i><span class="app-menu__label">Dashboard</span></a></li>
+
+      <li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><i
+            class="app-menu__icon fa fa-edit"></i><span class="app-menu__label">Management</span><i
+            class="treeview-indicator fa fa-angle-right"></i></a>
+        <ul class="treeview-menu">
+          <li><a class="treeview-item" routerLink="/servicerequest" routerLinkActive="active"><i
+                class="icon fa fa-user"></i>Order Request</a></li>
+        </ul>
+
+      </li>
+      <hr>
+      <li><a class="app-menu__item" href="" (click)="logoutAction()"><i class="app-menu__icon fa fa-sign-out"></i><span
+            class="app-menu__label">Logout</span></a></li>
+    </ul>
+    <ul class="app-menu" *ngIf="role=='SUPERADMIN'">
+      <li><a class="app-menu__item active" routerLink="/dashboard" routerLinkActive="active"><i
+            class="app-menu__icon fa fa-dashboard"></i><span class="app-menu__label">Dashboard</span></a></li>
+
+      <li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><i
+            class="app-menu__icon fa fa-edit"></i><span class="app-menu__label">Management</span><i
+            class="treeview-indicator fa fa-angle-right"></i></a>
+        <ul class="treeview-menu">
+          <li><a class="treeview-item" routerLink="/userdetail" routerLinkActive="active"><i
+                class="icon fa fa-users"></i>Users</a></li>
+          <li><a class="treeview-item" routerLink="/sponsordetail" routerLinkActive="active"><i
+                class="icon fa fa-user"></i>Commissioner</a></li>
+          <li><a class="treeview-item" routerLink="/servicerequest" routerLinkActive="active"><i
+                class="icon fa fa-user"></i>Order Request</a></li>
+        </ul>
+
+      </li>
+      <hr>
+      <li><a class="app-menu__item" href="" (click)="logoutAction()"><i class="app-menu__icon fa fa-sign-out"></i><span
+            class="app-menu__label">Logout</span></a></li>
+    </ul>
+
+  </aside>
+
+  <div class="application-sidebar" *ngIf="role=='USER' && positionId != null">
+
+    <img src="../../assets/img/img/logo/logo.png" alt="path not correct"/>
+
+    <ul class="list-group list-group-flush">
+      <li class="list-group-item details_blk" routerLink="/dashboard" routerLinkActive="active" ><a class="list_anchor"><span
+            class="badge badge-light" >1</span>&nbsp;Demographic Information</a></li>
+      <li class="list-group-item details_blk" [routerLink]="['/empinfo']"  routerLinkActive="active"><a class="list_anchor"><span
+            class="badge badge-light">2</span>&nbsp;Employment Information</a></li>
+      <li class="list-group-item details_blk" [routerLink]="['/verify']"  routerLinkActive="active"><a class="list_anchor"><span
+            class="badge badge-light">3</span>&nbsp;Verify & Submit</a></li>
+    </ul>
+
+  </div>
+
+  <main class="app-content">
+    <router-outlet></router-outlet>
+  </main>
+</div>

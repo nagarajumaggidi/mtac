@@ -1,0 +1,360 @@
+<!--header area start-->
+
+<div class="top_right">
+	<!----<button class="btn btn-success btn-sm"  style="margin-top: 8px" (click)="LoginPage()">Login</button>-->
+	<button class="btn btn-light btn-sm login" style="margin-top: 8px">Login</button>
+
+</div>
+
+
+<!--body start-->
+
+
+<div class="container-fluid Imgheight">
+
+	<div class="row">
+
+		<div class="desk">
+			<img src="assets\img\img\background.png">
+
+		</div>
+		<div class="desk1">
+			<img src="assets\img\img\jobs.png">
+		</div>
+		<div class="govt">
+			<img src="assets\img\img\logo-desktop.png">
+		</div>
+		<div class="uni">
+			<h4> GURUGRAM UNIVERSITY </h4>
+			<p> (State Govt. University Established Under Haryana Act 17 Of 2017) </p>
+		</div>
+		<div class="job">
+			<h1 style="color: rgb(206, 245, 33)">2019-2020</h1>
+			<br>
+			<h1 style="color: white">
+				Job Application
+			</h1>
+		</div>
+
+	</div>
+	<div class="buttonStyle">
+		<button class="btn btn-lg btn-warning custom-reg-btn" id="signup" type="button"> Register Now &nbsp;&nbsp; <i
+				class="fa fa-angle-right"></i></button>
+	</div>
+</div>
+
+
+<div class="container pt-0">
+	<div class="row">
+		<div class="col-md-12">
+			<section class="col-md-10 offset-md-1 mt-5 ">
+				<div class="card pgm-list">
+					<div class="card-body">
+						<h5>Open Positions</h5><br>
+						<div>
+							<div class="row" *ngFor="let list of recrutmentData;">
+								<div class="col-md-10">
+									<p class="fontSize">{{list.positionName}}</p>
+									<button class="btn btn-sm btn-color">Eligibility Criteria</button>
+									<span>{{list.eligibilityCriteria}}</span>
+									<hr>
+								</div>
+
+								<div class="col-md-2">
+									<button class="btn btn-sm btn-outline-success apply-btn name" type="button"
+										(click)="onClick(list)">Apply Now</button>
+
+								</div>
+							</div>
+
+						</div>
+
+					</div>
+				</div>
+			</section>
+		</div>
+	</div>
+</div>
+
+<!--body end-->
+<!----<router-outlet></router-outlet>-->
+
+
+<!--Sign in Login Modal -->
+<div id="loginModal" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<button class="modal-close1" id="sign" type="button"><i class="fa fa-close fa-2x cursor1"></i></button>
+	<div class="modal-dialog modal-lg" role="document">
+		<div class="modal-content">
+			<div class="modal-body">
+				<div class="container col-md-12">
+					<div class="row">
+						<div class="col-md-5 col-sm-5 col-xl-5">
+							<img alt="Register" class="img-fluid " src="assets\img\img\login-gsp-girl.png">
+						</div>
+						<div class="col-md-7 col-sm-7 col-xl-7" *ngIf="!createdby">
+							<div class="text-right mt-2">
+								<img src="assets\img\img\OJAS-LOGO.PNG"><br>
+								<strong title="GST Suvidha Provider">GST Suvidha Provider</strong>
+							</div>
+
+							<div class="row px-2 mt-5">
+								<h6 class="Register-Now">Login to Gsp Portal</h6>
+							</div>
+
+							<div class="row">
+
+								<form class="form col-md-12 col-sm-12 col-xl-12" [formGroup]="loginform"
+									(ngSubmit)="LoginAction(loginform.value)">
+
+									<div class="form-group">
+										<label class="form-label js-hide-label" for="username-modal">User Id</label>
+										<input class="form-control" id="username-modal" name="username-modal"
+											placeholder="User Id" formControlName="userId">
+									</div>
+
+									<div class="form-group">
+										<label class="form-label js-hide-label"
+											for="login-password-modal">Password</label>
+										<input class="form-control" type="password" id="login-password-modal"
+											name="login-password-modal" placeholder="Password"
+											formControlName="password">
+
+										<span style="color:red"
+											*ngIf="myform.get('password').touched && myform.get('password').invalid">
+											<span *ngIf="myform.get('password').errors.required">
+												Name of the candidate is required
+											</span>
+											<span *ngIf="myform.get('password').errors.pattern">
+												pattern
+											</span>
+										</span>
+
+
+									</div>
+
+									<div class="row">
+										<div class="col-md-6">
+										<div class="form-group">
+											<label class="form-label js-hide-label"
+												for="login-captcha-modal">Captcha</label>
+											<input class="form-control" type="text" id="txtInput"
+												name="login-password-modal" formControlName="captcha">
+											</div>
+										</div>
+									
+									<div>
+
+									</div>
+									 <div class="col-md-4">
+									
+									   <span type="text" class="mt-3" id="mainCaptcha"></span> 
+									  <i class="ml-3 fa fa-refresh" style="font-size:15px;" aria-hidden="true" id="refresh" (click)="onClickCaptcha()"></i>   
+									 
+									 </div>
+									 <button type="button" id="Button1" class="btn btn-primary btn-sm button1" (click)="ValidCaptcha1()">Check</button>
+									
+								
+								
+
+									</div>
+
+
+									<p><a class="modal-popup-already buttonlink" href="#" style="color:blue;"
+											id="forgotPassword" (click)="forget()">Forgot
+											Password?</a></p>
+
+
+									<div class="row mt-2">
+										<div class="col-sm-12 col-md-12 col-xl-12 mt-4">
+											<button class="btn btn-modal-sign-in" type="submit">Login</button>
+										</div>
+
+
+										<div class="col-sm-12 col-md-12 col-xl-12 mt-5 ">
+
+											<h6 class="modal-popup-already"> Not registered Yet? </h6>
+											<button class="btn btn-outline-warning  btn-block mt-4">
+
+												<a class="modal-popup-already" id="openRegModal1"> RegisterNow</a>
+
+											</button>
+
+										</div>
+									</div>
+								</form>
+							</div>
+						</div>
+
+						<!-- forgot start -->
+
+						<div class="col-md-6 col-sm-6 col-xl-6" *ngIf="createdby">
+							<div class="row px-2">
+								<h4 class="Register-Now">Forgot Password </h4>
+							</div>
+							<div class="row px-2 mt-3">
+								<h5 class="modal-sign-in-h6"> Password send to your mail </h5>
+							</div>
+							<div class="row">
+
+								<form class="form col-md-12 col-sm-12 col-xl-12" #forgotForm="ngForm">
+
+									<div class="form-group">
+										<label class="form-label js-hide-label" for="username-modal">Email</label>
+										<input class="form-control" id="username-modal" placeholder="Email"
+											minlength="4" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$"
+											[(ngModel)]="emailInput" name="forgot" minlength="4" class="form-control"
+											#forgotPassword="ngModel" required>
+
+										<span style="color:red"
+											*ngIf="forgotPassword.invalid && forgotPassword.touched">
+
+											<span *ngIf="forgotPassword.errors.required">
+												Email is required.
+											</span>
+											<span *ngIf="forgotPassword.errors.minlength">
+												Email must be at least 4 characters long.
+											</span>
+											<span *ngIf="forgotPassword.errors.pattern">
+												Email must contains @.
+											</span>
+										</span>
+									</div>
+
+									<div class="row mt-5">
+										<div class="col-sm-5 col-md-5 col-xl-5 mt-4">
+											<button class="btn btn-modal-sign-in"
+												(click)="forgotPassword123()">Submit</button><br>
+										</div>
+										<div class="col-sm-7 col-md-7 col-xl-7 text-right mt-4">
+											<strong><a (click)="backToLogin()">Back To Login</a></strong>
+										</div>
+									</div>
+
+								</form>
+							</div>
+
+						</div>
+
+						<!-- forgot end -->
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- Register Modal pop up-->
+
+
+
+
+<!--Sign in Login Modal -->
+<div id="reigsterModal" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<button class="modal-close1" id="sign1" type="button"><i class="fa fa-close fa-2x cursor1"></i></button>
+	<div class="modal-dialog modal-lg" role="document">
+		<div class="modal-content">
+			<div class="modal-body">
+				<div class="container col-md-12">
+					<div class="row">
+						<div class="col-md-6 col-sm-6 col-xl-6">
+							<img alt="Register" class="img-fluid mt-5"
+								src="assets\img\img\login-gsp-girl.png">
+						</div>
+						<div class="col-md-6 col-sm-6 col-xl-6">
+							<div class="row px-2">
+								<h4 class="Register-Now">Register Now</h4>
+							</div>
+							<div class="row">
+								<form class="form col-md-12 col-sm-12 col-xl-12 ng-invalid ng-touched ng-dirty"
+									[formGroup]="registerform" (ngSubmit)="register(registerform.value)">
+									<div class="form-group">
+										<label class="form-label" for="username-modal">Candiate Name (As per matric
+											certificate Name)</label>
+										<input class="form-control ng-touched ng-dirty ng-invalid" id="username-modal"
+											name="username-modal"
+											placeholder="Candiate Name (As per matric certificate Name)" required
+											type="email" formControlName="candidateName">
+										<span
+											*ngIf="registerform.controls['candidateName'].invalid && registerform.controls['candidateName'].touched"
+											class='text text-danger'>Please Enter Name</span>
+									</div>
+									<div class="form-group">
+										<label class="form-label" for="login-password-modal">Aadhar Number</label>
+										<input class="form-control ng-invalid ng-touched ng-dirty" id="aadhar-modal"
+											name="aadhar-modal" placeholder="Aadhar Number" required type="number"
+											formControlName="aadharNumber">
+										<span
+											*ngIf="registerform.controls['aadharNumber'].invalid && registerform.controls['aadharNumber'].touched"
+											class='text text-danger'>Please Enter Aadhar Number</span>
+									</div>
+									<div class="form-group">
+										<label class="form-label" for="email-modal">Email</label>
+										<input class="form-control ng-pristine ng-invalid ng-touched" id="email-modal"
+											name="email-modal" placeholder="Email" required type="email"
+											formControlName="email">
+										<span
+											*ngIf="registerform.controls['email'].invalid && registerform.controls['email'].touched"
+											class='text text-danger'>Please enter email</span>
+									</div>
+									<div class="form-group">
+										<label class="form-label" for="mobile-modal">Mobile Number</label>
+										<input class="form-control ng-pristine ng-invalid ng-touched" id="mobile-modal"
+											name="mobile-modal" placeholder="Mobile Number" required type="number"
+											formControlName="mobileNumber">
+										<span
+											*ngIf="registerform.controls['mobileNumber'].invalid && registerform.controls['mobileNumber'].touched"
+											class='text text-danger'>Please enter Mobile Number</span>
+									</div>
+									<div class="form-group">
+										<label class="form-label" for="message-modal">Date of Birth</label>
+										<input class="form-control ng-pristine ng-invalid ng-touched" id="dob-modal"
+											name="dob-modal" placeholder="Date of Birth" required type="date"
+											formControlName="dob">
+										<span
+											*ngIf="registerform.controls['dob'].invalid && registerform.controls['dob'].touched"
+											class='text text-danger'>Please enter dob</span>
+									</div>
+									<div class="form-group">
+										<label class="form-label js-hide-label" for="password-modal">Password</label>
+										<input class="form-control ng-pristine ng-invalid ng-touched"
+											id="password-modal" name="password-modal" placeholder="Password" required
+											type="password" formControlName="password">
+										<span
+											*ngIf="registerform.controls['password'].invalid && registerform.controls['password'].touched"
+											class='text text-danger'>Please enter password</span>
+									</div>
+									<div class="form-group">
+										<label class="form-label" for="confirm password modal">Confirm Password</label>
+										<input class="form-control ng-pristine ng-invalid ng-touched"
+											id="confirm_password-modal" name="confirm_password-modal"
+											placeholder="Confirm Password" required type="password">
+									</div>
+									<p class="wait" *ngIf="spin">Please wait &nbsp;<i class="fa fa-spinner fa-spin"></i>
+									</p>
+									<div class="row mt-5">
+										<div class="col-sm-5 col-md-5 col-xl-5">
+											<button class="btn btn-modal-sign-in" type="submit"
+												[disabled]="registerform.invalid">Register </button>
+										</div>
+										<div class="col-sm-7 col-md-7 col-xl-7 text-right">
+											<span class="modal-popup-already"> Already have a account? <a
+													class="modal-popup-already buttonlink" id="openRegModal"> Sign In
+													Here</a>
+											</span>
+										</div>
+									</div>
+
+								</form>
+							</div>
+
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+<!--popup end-->

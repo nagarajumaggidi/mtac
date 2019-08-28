@@ -1,0 +1,122 @@
+<div class="app-title">
+  <div>
+    <h1><i class="fa fa-th-list"></i> Test Code</h1>
+    <p>Test Code Details</p>
+  </div>
+  <ul class="app-breadcrumb breadcrumb">
+  </ul>
+</div>
+<div class="row">
+  <div class="col-md-3">
+    <div class="form-group">
+      <input type="text" class="form-control" [(ngModel)]="term" placeholder="Search Here...">
+    </div>
+  </div>
+  <div class="col-md-9">
+    <button type="button" class="btn btn-danger pull-right" style="margin-bottom: 10px;" data-backdrop="static" data-toggle="modal"
+      data-target="#myModal"><i class="fa fa-plus"></i>Add Test</button>
+  </div>
+</div>
+<div class="tile">
+  <span style="font-size: 25px;">Test Code Details</span>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Test Name</th>
+        <th>Test Code</th>
+        <th>Test Code Description</th>
+        <th>Is Default Test</th>
+        <th>Edit</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor='let item of testCodeData | filter:term |paginate: { itemsPerPage: 10, currentPage: p };let i=index'>
+        <td>
+          <div>{{i+1}}</div>
+        </td>
+        <td>
+          <div *ngIf="!item.isEditable">{{item.testName}}</div>
+          <input [(ngModel)]="item.testName" *ngIf="item.isEditable" type="text" class="form-control">
+        </td>
+        <td>
+          <div *ngIf="!item.isEditable">{{item.testCode}}
+          </div>
+          <input [(ngModel)]="item.testCode" type="text" *ngIf="item.isEditable" class="form-control">
+        </td>
+        <td>
+          <div *ngIf="!item.isEditable">{{item.description}}</div>
+          <input type="text" [(ngModel)]="item.description" *ngIf="item.isEditable" class="form-control">
+        </td>
+        <td>
+          <div *ngIf="!item.isEditable">{{item.defaultTest}}</div>
+          <input type="text" [(ngModel)]="item.defaultTest" *ngIf="item.isEditable" class="form-control">
+        </td>
+        <td>
+          <button type="button" class="btn btn-info btn-sm" (click)="item.isEditable=!item.isEditable"
+            *ngIf="!item.isEditable">Edit</button>
+          <button type="button" class="btn btn-success" *ngIf="item.isEditable"
+            (click)="item.isEditable=!item.isEditable;updateTestCode(item.testName,item.testCode,item.description,item.id,item.defaultTest)">Save</button>
+        </td>
+        <td>
+            <button  class="btn btn-warning btn-sm"  *ngIf="item.isEditable" (click)="item.isEditable=!item.isEditable">Cancel</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<pagination-controls (pageChange)="p = $event" class="pull-right"></pagination-controls>
+
+
+<!-- Modal -->
+<div id="myModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <form [formGroup]="testCodeForm" (ngSubmit)="creattestDetails(testCodeForm.value)">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Test Details Form</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        <div class="modal-body">
+
+          <div class="form-group">
+            <label for="name">Test Name:</label>
+            <input type="text" formControlName="testName" class="form-control" id="name">
+            <span class="text text-danger"
+              *ngIf="testCodeForm.controls['testName'].invalid && testCodeForm.controls['testName'].touched">Test Name
+              is required</span>
+          </div>
+          <div class="form-group">
+            <label for="code">Test Code:</label>
+            <input type="text" formControlName="testCode" class="form-control" id="code">
+            <span class="text text-danger"
+              *ngIf="testCodeForm.controls['testCode'].invalid && testCodeForm.controls['testCode'].touched">Test Code
+              is required</span>
+          </div>
+          <div class="form-group">
+            <label for="desc">Test Description:</label>
+            <textarea type="text" formControlName="description" rows="4" class="form-control" id="desc"></textarea>
+            <span class="text text-danger"
+              *ngIf="testCodeForm.controls['description'].invalid && testCodeForm.controls['description'].touched">Test Code
+              is required</span>
+          </div>
+          <div class="form-group">
+            <label for="default">Is Default: </label>&nbsp;
+            <input type="checkbox"  class=".form-check-inline" formControlName="defalut" id="defalut">
+            <span class="text text-danger"
+              *ngIf="testCodeForm.controls['defalut'].invalid && testCodeForm.controls['defalut'].touched">Please check the box </span>
+          </div>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-success" data-dismiss="modal">Close</button>
+          <input type="submit" class="btn btn-info" [disabled]="testCodeForm.invalid" value="Submit">
+        </div>
+      </div>
+    </form>
+
+  </div>
+</div>

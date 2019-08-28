@@ -1,0 +1,84 @@
+<div class="app-title">
+  <div>
+    <h1><i class="fa fa-th-list"></i> Status</h1>
+    <p>Status Details</p>
+  </div>
+  <ul class="app-breadcrumb breadcrumb">
+  </ul>
+</div>
+<div class="row">
+    <div class="col-md-3">
+        <div class="form-group">
+            <input type="text" class="form-control" [(ngModel)]="term" placeholder="Search Here...">
+          </div>
+    </div>
+    <div class="col-md-9">
+        <button type="button" style="margin-bottom:8px" class="btn btn-danger float-right" data-toggle="modal" data-backdrop="static" data-target="#myModal"
+        (click)="addStatus(regForm)">Add</button>  
+        </div>
+  </div>
+<div class="tile">
+ <h5>Status</h5>
+
+
+<table class="table" >
+  <thead>
+    <tr style="font-size:15px">
+      <th>Id</th>
+      <th>Status</th>
+      <th>Edit</th>
+      <th>Delete</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let data of statusData | filter:term |paginate: { itemsPerPage: 10, currentPage: p }">
+      <td>{{data.id}}</td>
+      <td>{{data.nameOfTheStatus}}</td>
+      <td>
+        <span>
+          <span (click)="editStatus(data)" data-toggle="modal" data-target="#myModal"  class="glyphicon glyphicon-pencil">
+            <i class="fa fa-edit" style="font-size:24px;color:rgb(49, 17, 233)"></i>
+          </span>
+        </span>
+      </td>
+      <td>
+        <span>
+          <span (click)="deleteStatus(data.id)" value="delete">
+            <i class="fa fa-trash" style="font-size:24px;color:red"></i>
+          </span>
+        </span>
+      </td>
+    </tr>
+  </tbody>
+</table>
+</div>
+<pagination-controls (pageChange)="p = $event" class="pull-right"></pagination-controls>
+<div id="myModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+  
+      <!-- Modal content-->
+      <form [formGroup]="statusForm">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title">Status</h4>
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+      
+          </div>
+          <div class="modal-body">
+      
+            <div class="col-md-12">
+              <input type="text" placeholder="Status" name="nameOfTheStatus" class="form-control" formControlName="nameOfTheStatus">
+              <span class="text text-danger" *ngIf="statusForm.controls['nameOfTheStatus'].invalid && statusForm.controls['nameOfTheStatus'].touched">Status is required</span>
+            </div>
+      
+          </div>
+          <div class="modal-footer">
+            <button type="submit"  [disabled]="statusForm.invalid" data-dismiss="modal" class="btn btn-primary float-right" id="register"
+              (click)="save(statusForm)" *ngIf="addfrm">Submit</button>
+            <button type="button"  [disabled]="statusForm.invalid" data-dismiss="modal" class="btn btn-primary float-right" id="register"
+              (click)="updateStatusData(statusForm)" *ngIf="updatfrm">Update</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>

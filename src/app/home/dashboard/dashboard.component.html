@@ -1,0 +1,475 @@
+
+<!-- <div class="container" *ngIf="true">
+  <div class="row">
+    <div class="col-md-12">
+     <div class="table-responsive table_style">
+       <h3>Dear {{localuserdata?.candidateName}}</h3>
+       <div>
+        <h6>This are your applied positions</h6>
+       </div>
+      <table class="table table-bordered table2">
+        <thead>
+          <tr>
+            <th>Application Id</th>
+            <th>Position Applied For</th>
+            <th>Position Code</th>
+            <th>Aadhar</th>
+            <th>Mobile Number</th>
+            <th>Registration End data</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let testvalue of getUserListId;let i=index;">
+            <td>{{testvalue.applicationNo}}</td>
+            <td>{{testvalue.possitionAppliedFor}}</td>
+            <td>{{testvalue.possitionCode}}</td>
+            <td>{{testvalue.aadharNumber}}</td>
+            <td>{{testvalue.mobileNumber}}</td>
+            <td>{{testvalue.regEndDate}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  </div>
+ </div> -->
+ 
+   
+ <!-- <div class="container" style="margin-top:10px;" *ngIf="applicationid?.errorCode == 'OK' "> -->
+  
+   <div class="container" style="margin-top:10px;">
+    <div class="row">
+   
+    <!-- ------------------------------------------------------------- -->
+    <div class="col-md-12">
+    <div class="card">
+    <div class="card-body">
+    <!-- ----------------------------------------- -->
+   
+    <div class="row">
+    <div class="col-md-12">
+    <h5>Demographic Information:</h5><br>
+    <p class="text-left"> Application no: {{appid}}</p>
+    </div>
+    </div>
+    <hr>
+  
+   
+    <div class="row">
+
+        <div class="col-md-4 pb-4">
+          <label>Name of the Candidate<span style="color:red;">*</span></label>
+
+          <p>{{ localuserdata?.candidateName}}</p>
+
+        </div>
+
+        <div class="col-md-4 pb-4">
+          <label>Mobile<span style="color:red;">*</span></label>
+          <p>{{localuserdata?.mobileNumber}}</p>
+        </div>
+        <div class="col-md-4 pb-4">
+          <label>Email-Id<span style="color:red;">*</span></label>
+          <p>{{localuserdata?.username}}</p>
+        </div>
+        <div class="col-md-4 pb-4">
+          <label>Date Of Birth<span style="color:red;">*</span></label>
+          <p>{{localuserdata?.dob}}</p>
+        </div>
+        <div class="col-md-4 pb-4">
+          <label>Aadhar no<span style="color:red;">*</span></label>
+          <p>{{localuserdata?.aadharNumber}}</p>
+        </div>
+
+        <div class="col-md-4 pb-4">
+          <label>Post Applied For<span style="color:red;">*</span></label>
+          <p>{{possitionAppliedFor}}</p>
+        </div>
+
+
+      </div>
+    <hr>
+   
+    
+   
+    <form [formGroup]="myform" >
+   
+   
+    <br>
+   
+    <!-- ----------------------------------------- -->
+    <div class="row">
+    <div class="col-md-6">
+    <!-- <label> Do you belong to SC/ST/BC/EBPG <span style="color:red;">*</span></label> -->
+    <label> Applied Category as Per Haryana ?</label>
+   
+    <select class="form-control" formControlName="categoryAsperHaryana">
+    <option *ngFor="let c of Category" [ngValue]="c.id">{{c.categoryName}}</option>
+    </select>
+    <span style="color:red" *ngIf="myform.get('category').touched && myform.get('category').invalid">
+    <span *ngIf="myform.get('category').errors.required">
+    Applied Category is required
+    </span>
+    </span>
+   
+    </div>
+   
+   
+    <div class="col-md-6">
+    <label for="name">Name of the candidate in Full<span style="color:red;">*</span></label>
+    <input type="text" class="form-control" formControlName="fullName" name="candidate name"
+    placeholder="Enter your Name">
+   
+    <span style="color:red" *ngIf="myform.get('fullName').touched && myform.get('fullName').invalid">
+    <span *ngIf="myform.get('fullName').errors.required">
+    Name of the candidate is required
+    </span>
+    <span *ngIf="myform.get('fullName').errors.pattern">
+     pattern
+      </span>
+    </span>
+    </div>
+    </div>
+    <br>
+   
+   
+   
+    <div class="row">
+    <div class="col-md-6">
+    <label for="fatherName">Father’s Name<span style="color:red;">*</span></label>
+    <input type="text" class="form-control" formControlName="fatherName" name="fatherName"
+    placeholder="Enter Father’s Name">
+    <span style="color:red" *ngIf="myform.get('fatherName').touched && myform.get('fatherName').invalid">
+    <span *ngIf="myform.get('fatherName').errors.required">
+    fatherName is required
+    </span>
+    </span>
+    </div>
+   
+    <div class="col-md-6 ">
+    <label for="motherName">Mother’s Name<span style="color:red;">*</span></label>
+    <input type="text" class="form-control" formControlName="motherName" name="motherName"
+    placeholder="Enter Mother’s Name">
+    <span style="color:red" *ngIf="myform.get('motherName').touched && myform.get('motherName').invalid">
+    <span *ngIf="myform.get('motherName').errors.required">
+    motherName is required
+    </span>
+    </span>
+    </div>
+   
+    </div>
+   
+    <br>
+   
+    <div class="row">
+    <div class="col-md-6">
+    <label for="Domicile">Domicile </label>
+    <select class="form-control" formControlName="domicile" name="domicile" (change)="setStates($event)">
+    <option *ngFor="let s of selectState" [value]="s.state">
+    {{s.state}}
+    </option>
+   
+    </select>
+    <span style="color:red" *ngIf="myform.get('domicile').touched && myform.get('domicile').invalid">
+    <span *ngIf="myform.get('domicile').errors.required">
+    Domicile is required
+    </span>
+    </span>
+    </div>
+   
+    <div class="col-md-6" *ngIf="stateValue">
+    <label>Others<span style="color:red;">*</span></label>
+    <input type="text" class="form-control" formControlName="otherDomicileDetails"
+    name="otherDomicileDetails" placeholder="Enter State">
+   
+    </div>
+   
+    </div>
+   
+    <!-- ----------------------------------------- -->
+    <hr>
+    <div class="row">
+      <div class="col-md-6"></div>
+      <div class="col-md-6">
+          <input type="checkbox" (change)="updateAddr($event)">&nbsp; Save as beside <br>
+      </div>
+    </div>
+    <div class="row">
+      
+    <div class="col-md-6">
+    <strong>Present Postal Address<span style="color:red;">*</span></strong><br><br>
+     <label>Street Address:</label>
+    <input type="text" class="form-control" formControlName="street">
+    <label>Address Line 2:</label>
+    <input type="text" class="form-control" formControlName="addressline">
+    <label>city:</label>
+    <input type="text" class="form-control" formControlName="city">
+    <label>State:</label>
+    <input type="text" class="form-control" formControlName="state">
+    <label> Postal/Zip Code:</label>
+    <input type="text" class="form-control" formControlName="postal"><br>
+   
+    </div>
+
+    <div class="col-md-6">
+        <strong>Permanent Address<span style="color:red;">*</span></strong><br><br>
+        <label>Street Address:</label>
+        <input type="text" class="form-control" formControlName="streetper">
+        <label>Address Line 2:</label>
+        <input type="text" class="form-control" formControlName="addressper">
+        <label>city:</label>
+        <input type="text" class="form-control" formControlName="cityper">
+        <label>State:</label>
+        <input type="text" class="form-control" formControlName="stateper">
+        <label> Postal/Zip Code:</label>
+        <input type="text" class="form-control" formControlName="postalper">
+    </div>
+
+
+    </div>
+   
+
+   
+    <!-- ----------------------------------------- -->
+    <hr>
+    <div class="row">
+    <div class="col-md-6">
+    <label> Mobile Number <span style="color:red;">*</span></label>
+    <input type="text" class="form-control" formControlName="mobileNumber" placeholder="Enter Mobile no">
+    <span style="color:red"
+    *ngIf="myform.get('mobileNumber').touched && myform.get('mobileNumber').invalid">
+    <span *ngIf="myform.get('mobileNumber').errors.required">
+    mobileNumber is required
+    </span>
+    </span>
+    </div>
+   
+    <div class="col-md-6">
+    <label>Email Address <span style="color:red;">*</span></label>
+    <input type="text" class="form-control" placeholder="Enter Email Address" formControlName="email">
+    <span style="color:red" *ngIf="myform.get('email').touched && myform.get('email').invalid">
+    <span *ngIf="myform.get('email').errors.required">
+    Email Address is required
+    </span>
+    </span>
+    </div>
+    </div>
+    <br>
+   
+    <!-- ----------------------------------------- -->
+   
+    <div class="row">
+    <div class="col-md-6">
+    <label>Date Of Birth <span style="color:red;">*</span></label>
+    <input type="date" class="form-control" placeholder="Date Of Birth" formControlName="dob">
+    <span style="color:red" *ngIf="myform.get('dob').touched && myform.get('dob').invalid">
+    <span *ngIf="myform.get('dob').errors.required">
+    Date Of Birth is required
+    </span>
+    </span>
+    </div>
+   
+    <div class="col-md-6">
+    <label>Gender <span style="color:red;">*</span></label>
+    <select class="form-control" formControlName="gender">
+    <option *ngFor="let g of gender" [value]="g">{{g}}</option>
+    </select>
+    <span style="color:red" *ngIf="myform.get('gender').touched && myform.get('gender').invalid">
+    <span *ngIf="myform.get('gender').errors.required">
+    gender is required
+    </span>
+    </span>
+    </div>
+    </div>
+    <br>
+   
+    <!-- ----------------------------------------- -->
+   
+    <div class="row">
+    <div class="col-md-6">
+    <label> Age as on last date of applying <span style="color:red;">*</span></label>
+    <input type="text" class="form-control" formControlName="age" name="age">
+    <span style="color:red" *ngIf="myform.get('age').touched && myform.get('age').invalid">
+    <span *ngIf="myform.get('age').errors.required">
+    age is required
+    </span>
+    </span>
+    </div>
+   
+    <div class="col-md-6">
+    <label> Place of Birth <span style="color:red;">*</span></label>
+    <input type="text" class="form-control" placeholder="Place of Birth" formControlName="PlaceofBirth">
+    <span style="color:red"
+    *ngIf="myform.get('PlaceofBirth').touched && myform.get('PlaceofBirth').invalid">
+    <span *ngIf="myform.get('PlaceofBirth').errors.required">
+    PlaceofBirth is required
+    </span>
+    </span>
+    </div>
+    </div>
+    <br />
+   
+    <!-- ----------------------------------------- -->
+   
+    <div class="row">
+    <div class="col-md-6">
+    <label> Aadhar Number <span style="color:red;">*</span></label>
+    <input type="number" class="form-control" placeholder="Aadhar Number" maxlength="12"
+    formControlName="AadharNumber">
+    <span style="color:red"
+    *ngIf="myform.get('AadharNumber').touched && myform.get('AadharNumber').invalid">
+    <span *ngIf="myform.get('AadharNumber').errors.required">
+    Aadhar Number is required
+    </span>
+    </span>
+    </div>
+    <div class="col-md-6">
+    <label>Upload Aadhar</label><br>
+    <input type="file" class="form-control adharFile" name="uploadaadhar" class="clicked"
+    formControlName="uploadaadhar" (change)="handleFileSelect($event)">
+    <img [src]="transform()" style="width: 5%">
+    <!-- <span style="color:red"
+    *ngIf="myform.get('uploadAadhar').touched && myform.get('uploadAadhar').invalid">
+    <span *ngIf="myform.get('uploadAadhar').errors.required">
+    Upload Aadhar is required
+    </span>
+    </span> -->
+    </div>
+   
+    </div>
+    <br />
+   
+    <!-- ----------------------------------------- -->
+   
+    <div class="row">
+   
+    <div class="col-md-6">
+    <label> Matrial Status <span style="color:red;">*</span></label>
+    <select class="form-control" formControlName="MartialStatus" (change)="setNav($event)">
+    <option *ngFor="let m of martial" value="m.send" [value]="m.matrial">{{m.matrial}}</option>
+    </select>
+    <span style="color:red"
+    *ngIf="myform.get('MartialStatus').touched && myform.get('MartialStatus').invalid">
+    <span *ngIf="myform.get('MartialStatus').errors.required">
+    MartialStatus is required
+    </span>
+    </span>
+    </div>
+   
+    <br><br>
+    <div class="col-md-6">
+    <label> Nationality <span style="color:red;">*</span></label>
+    <input type="text" class="form-control" placeholder="Nationality" formControlName="Nationality">
+    <span style="color:red" *ngIf="myform.get('Nationality').touched && myform.get('Nationality').invalid">
+    <span *ngIf="myform.get('Nationality').errors.required">
+    Nationality is required
+    </span>
+    </span>
+    </div>
+    <div class="col-md-4" *ngIf="maritialValue">
+    <br/>
+    <label>whether you have more than one living spouse ?</label>
+    <label class="radio-inline1 mart8">
+    <input type="radio" formControlName="moreLivingSpouses" name="moreLivingSpouses" [value]="true" checked>Yes
+    </label>
+   
+    <label class="radio-inline1">
+    <input type="radio" formControlName="moreLivingSpouses" name="moreLivingSpouses" [value]="false">No
+    </label>
+    <br />
+    </div>
+   
+    </div>
+    <br>
+   
+    <!-- ----------------------------------------- -->
+   
+   
+   
+   
+    <div class="row">
+    <div class="col-md-6">
+    <label>Under Which Category you are applying for ?</label>
+    <!-- <label> Do you belong to SC/ST/BC/EBPG <span style="color:red;">*</span></label> -->
+    <select class="form-control" formControlName="category">
+    <option *ngFor="let c of Category"[ngValue]="c.id" >{{c.categoryName}}</option>
+    </select>
+    <span style="color:red" *ngIf="myform.get('category').touched && myform.get('category').invalid">
+    <span *ngIf="myform.get('category').errors.required">
+    category is required
+    </span>
+    </span>
+   
+    </div>
+    </div>
+   
+   
+    <br />
+   
+    <!-- ----------------------------------------- -->
+    <p>Ex-Servicemen of Haryana</p>
+
+    <div class="row hariyana1">
+    <div class="col-md-4">
+    <label class="radio-inline1 mart8">
+    <input type="radio" formControlName="Exservices" name="Exservices" [value]="true"
+    (click)="setradio('true')" [checked]="options">Yes
+    </label>
+   
+    <label class="radio-inline1">
+    <input type="radio" formControlName="Exservices" name="Exservices" [value]="false"
+    (click)="setradio('false')" [checked]="!options">No
+    </label>
+    <br/>
+    </div>
+   
+   
+   
+    <div class="col-md-8">
+        <div *ngIf="isSelected('true')">
+    <label>Upload Exservice</label><br>
+    <input type="file" class="form-control adharFile" name="exService" class="clicked"
+    formControlName="exService" (change)="exservice($event)">
+    <img [src]="exserviceimg()" style="width:5%">
+    </div>
+    </div>
+   
+   
+    <!-- <div *ngIf="options">
+    <div class="col-md-8">
+    <label>Upload Exservice</label><br>
+    <input type="file" class="form-control adharFile" name="upload Exservice" class="clicked"
+    formControlName="exService" (change)="exservice($event)">
+    <img [src]="exserviceimg()" style="width: 18%">
+    </div>
+    </div> -->
+   
+    <div *ngIf="!options">
+   
+    </div>
+    </div>
+
+    <br/>
+   
+    <!-- ----------------------------------------- -->
+   
+    <div class="row">
+    <div class="col-md-12">
+    &nbsp;&nbsp;&nbsp;<button type="submit" *ngIf="save" class="btn btn-primary roundedbutton" (click)="saveDemographic()" ><strong>Save &
+    Continue</strong></button>
+    &nbsp;&nbsp;&nbsp;<button type="submit"  *ngIf="update"  class="btn btn-primary roundedbutton" (click)="updateDemographic()" ><strong>Update & Continue</strong></button>
+    </div>
+  
+    </div>
+   
+    <!-- ----------------------------------------- -->
+   
+    </form>
+   
+    </div>
+    </div>
+    </div>
+    </div>
+   </div>
+   
+   <!-- <h1 class="samplefooter"></h1> -->

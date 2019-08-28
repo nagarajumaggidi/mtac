@@ -1,0 +1,207 @@
+<div class="app-title">
+  <div>
+    <h1><i class="fa fa-th-list"></i> Fee Struture</h1>
+  </div>
+  <ul class="app-breadcrumb breadcrumb">
+  </ul>
+</div>
+<div class="row">
+  <div class="col-md-3">
+    <div class="form-group">
+      <input type="text" class="form-control" [(ngModel)]="term" placeholder="Search Here...">
+    </div>
+  </div>
+  <div class="col-md-9">
+    <button type="button" style="margin-bottom:8px" class="btn btn-danger float-right" data-toggle="modal"
+      data-backdrop="static" data-target="#myModal"  (click)="addEmployeementType(position)">Add</button>
+  </div>
+</div>
+<div class="tile">
+  
+ 
+  <table class="table">
+    <thead>
+      <tr style="font-size:15px">
+        <!-- <th>Id</th> -->
+        <th>Position Type</th>
+        <th>Category</th>
+        <th>Gender</th>
+        <th>Fee Amount</th>
+        <th>Fee Status</th>
+        <th>Edit</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- <tr *ngFor="let data of datas | filter:term |paginate: { itemsPerPage: 10, currentPage: p }"> -->
+      <tr *ngFor="let data of getfee| filter:term |paginate: { itemsPerPage: 5, currentPage: p };let i=index">
+        <!-- <td>{{i+1}}</td> -->
+        <td>{{data.positionType}}</td>
+        <td>{{data.catogry}}</td>
+        <td>{{data.gender}}</td>
+        <td>{{data.feeAmount}}</td>
+        <td *ngIf="data.feeStatus == 'Active'"><span [ngClass]="{'status1': data.feeStatus=='Inactive', 'status2':data.feeStatus=='Active' }" (click)="feeSturctureStatus(data)">Disable</span></td>
+        <td *ngIf="data.feeStatus == 'Inactive'"><span [ngClass]="{'status1': data.feeStatus=='Inactive', 'status2':data.feeStatus=='Active' }" (click)="feeSturctureStatus(data)">Enable</span></td>
+      <td>
+          <span>
+            <span (click)="editfeestructure(data.id)" data-toggle="modal" data-target="#myModal1"
+              class="glyphicon glyphicon-pencil">
+              <i class="fa fa-edit" style="font-size:24px;color:rgb(49, 17, 233)"></i>
+            </span>
+          </span>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<pagination-controls (pageChange)="p = $event" class="pull-right"></pagination-controls>
+
+
+<!-- Add position modal popup-->
+
+<div id="myModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <!-- Modal content-->
+    <form #position="ngForm" (ngSubmit)="createPositions">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Add Fee structure</h4>
+          <button type="button" class="close" data-dismiss="modal" (click)="position.reset()" >&times;</button>
+        </div>
+        <div class="modal-body">
+          <div class="row">
+              <div class="col-md-6">
+                  <label>Category Type</label>
+                <select class="form-control" [(ngModel)]= "categoryTypeId" (change)="getcategoryTypeId($event)" 
+                [ngModelOptions]="{standalone: true}"  #category="ngModel"  name="Cat" required>
+                <option [ngValue]="undefined" hidden> Select Category Type</option> 
+                    <option *ngFor="let category of categoryList" [value]="category.id">{{category.categoryName}}</option>
+                </select>
+                
+            <span style="color:red" *ngIf="category.invalid && category.touched">
+                <span *ngIf="category.errors.required">
+                    Category Type is required.
+                </span> 
+              </span>
+              </div>
+            <div class="col-md-6">
+                <label>Position Type</label>
+              <select class="form-control" [(ngModel)]= "positionTypeId" (change)="getpositionTypeId($event)" 
+              [ngModelOptions]="{standalone: true}" #positon= "ngModel" name="Pot" required>
+              <option [ngValue]="undefined" hidden>Select Position Type</option> 
+                 
+                  <option *ngFor="let positionType of datas" [value]="positionType.id">{{positionType.positionTypeName}}</option>
+              </select>
+            
+              <span style="color:red" *ngIf="positon.invalid && positon.touched">
+                <span *ngIf="positon.errors.required">
+                    Position Type is required.
+                </span> 
+              </span> 
+            </div>
+          </div>
+          <div class="row">
+              <div class="col-md-6">
+                  <label>Gender</label>
+                <select class="form-control" [(ngModel)]= "gendername" (change)="getgendername($event)" 
+                [ngModelOptions]="{standalone: true}" #nameGender= "ngModel" name="Gender" required>
+                
+                    <option [ngValue]="undefined" hidden>Select Gender</option> 
+                    <option *ngFor="let genderName of gender" [value]="genderName.value">{{genderName.value}}</option>
+                </select>
+                <span style="color:red" *ngIf="nameGender.invalid && nameGender.touched">
+                    <span *ngIf="nameGender.errors.required">
+                        Gender is required.
+                    </span> 
+                  </span>
+              </div>
+              <div class="col-md-6">
+                  <label>Fee Amount</label>
+                  <input type="number" placeholder="Fee Amount" [(ngModel)]="feeAmount" name="fee"
+                  class="form-control" #feeamount = "ngModel" required>
+                  <span style="color:red" *ngIf="feeamount.invalid && feeamount.touched">
+                      <span *ngIf="feeamount.errors.required">
+                          Fee Amount is required.
+                      </span> 
+                    </span>
+              </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" 
+            class="btn btn-primary float-right" id="register" (click)="createfeestructure()"  data-dismiss="modal" [disabled]="position.invalid">Submit</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div> 
+
+<!-- Add position modal popup-->
+
+<!--update position modal popup-->
+
+<div id="myModal1" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <!-- Modal content-->
+    <form [formGroup]="feeStructureFrom">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Update Fee Structure</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        <div class="modal-body">
+          <div class="row">
+              <div class="col-md-6">
+                  <label>Catagory Type</label>
+                  <select class="form-control" formControlName="categoryId" (change)="getcategoryTypeId($event)">
+                      <option value="">Please select Position Type</option> 
+                      <option *ngFor="let category of categoryList" [value]="category.id">{{category.categoryName}}</option>
+                  </select>
+                  <span style="color:red" *ngIf = "feeStructureFrom.get('categoryId').touched && feeStructureFrom.get('categoryId').invalid">
+                      <span *ngIf = "feeStructureFrom.get('categoryId').errors.required">
+                          Catagory Type is required
+                      </span>
+                  </span>
+                </div>
+            <div class="col-md-6">
+              <label>Position Type</label>
+              <select class="form-control" formControlName="positionTypeId" (change)="getpositionTypeId($event)">
+                  <option value="">Please select Position Type</option> 
+                  <option *ngFor="let positionType of datas" [value]="positionType.id">{{positionType.positionTypeName}}</option>
+              </select>
+              <span style="color:red" *ngIf = "feeStructureFrom.get('positionTypeId').touched && feeStructureFrom.get('positionTypeId').invalid">
+                  <span *ngIf = "feeStructureFrom.get('positionTypeId').errors.required">
+                      Position Type is required
+                  </span>
+              </span>
+            </div>
+          </div>
+          <div class="row">
+              <div class="col-md-6">
+                  <label>Catagory Type</label>
+                  <select class="form-control" formControlName="gender" (change)="getgendername($event)">
+                      <option value="">Please select Gender</option> 
+                      <option *ngFor="let genderName of gender" [value]="genderName.value">{{genderName.value}}</option>
+                  </select>
+                </div>
+                <div class="col-md-6">
+                    <label>Fee Amount</label>
+                    <input type="number" placeholder="Please Enter Fee Amount" formControlName="feeAmount" name="regStartDate"
+                    class="form-control">
+                    <span style="color:red" *ngIf = "feeStructureFrom.get('feeAmount').touched && feeStructureFrom.get('feeAmount').invalid">
+                        <span *ngIf = "feeStructureFrom.get('feeAmount').errors.required">
+                            Fee Amount is required
+                        </span>
+                    </span>
+                </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" data-dismiss="modal"
+            class="btn btn-primary float-right" id="register" (click)="updateFeeStructureById(feeStructureFrom.value)" [disabled]="feeStructureFrom.invalid">Update</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div> 
+
+<!--update position modal popup-->

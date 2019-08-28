@@ -1,0 +1,325 @@
+<div class="container" style="margin-top: 10px;">
+  <div class="row">
+
+    <div class="col-md-12" *ngFor="let d of DemographicArr">
+      <div class="card">
+        <div class="card-body">
+          <h5>Personal Information<a style="color:blue;float:right;font-size: 14px;" (click)="gotoHeroes()">Edit</a></h5>
+          <div class="row">
+            <div class="col-md-4">
+              <label>Name of the Candidate</label>
+              <h6>{{d.fullName}}</h6>
+            </div>
+            <div class="col-md-4">
+            </div>
+            <div class="col-md-4">
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-4">
+              <label>Mobile</label>
+              <h6>{{d.mobileNumber}}</h6>
+            </div>
+            <div class="col-md-4">
+              <label>E-Mail</label>
+              <h6>{{d.emailId}}</h6>
+            </div>
+            <div class="col-md-4">
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-4">
+              <label>Date of Birth</label>
+              <h6>{{d.dob}}</h6>
+            </div>
+            <div class="col-md-4">
+              <label>Age</label>
+              <h6>{{d.currentAge}}</h6>
+            </div>
+            <div class="col-md-4">
+              <label>Gender</label>
+              <h6>{{d.gender}}</h6>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-4">
+              <label>place Of Birth<span style="color:red;">*</span></label>
+              <h6>{{d.placeOfBirth}}</h6>
+            </div>
+
+            <div class="col-md-4">
+              <label>Position Applied For<span style="color:red;">*</span></label>
+              <h6>{{d.possitionAppliedFor}}</h6>
+            </div>
+            <div class="col-md-4">
+              <label>Aadhar Number</label>
+              <h6>{{d.aadharNumber}}</h6>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-4">
+              <label>Father's Name<span style="color:red;">*</span></label>
+              <h6>{{d.fatherName}}</h6>
+            </div>
+            <div class="col-md-4">
+              <label>Mother's Name<span style="color:red;">*</span></label>
+              <h6>{{d.motherName}}</h6>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-4">
+              <label>Residence/Domicile<span style="color:red;">*</span></label>
+              <h6>{{d.domicile}}/
+                {{d.otherDomicileDetails}}</h6>
+            </div>
+            <div class="col-md-4">
+              <!-- <label>Domicile certificate<span style="color:red;">*</span></label>
+              <h6><i class="material-icons attachment">&#xe226;</i>&nbsp;&nbsp;Domilcile_certificate.jpg</h6> -->
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-4">
+              <label>Nationality<span style="color:red;">*</span></label>
+              <h6>{{d.nationality}}</h6>
+            </div>
+          </div>
+          <hr />
+
+          <!--- Correspondance address-->
+          <h5>Correspondance Address<a style="color:blue;float:right;font-size: 14px;" (click)="gotoHeroes()">Edit</a></h5>
+          <div class="row">
+            <div class="col-md-7">
+              <label>Address<span style="color:red;">*</span></label>
+              <h6>{{d.addresses[0].addressLine2}},
+                {{d.addresses[0].streetAddress}},
+                {{d.addresses[0].city}},
+                {{d.addresses[0].state}},
+                {{d.addresses[0].zipCode}}
+              </h6>
+
+            </div>
+          </div>
+          <hr />
+          <!--- Permanent address-->
+          <h5>Permanent Address<a style="color:blue;float:right;font-size: 14px;" (click)="gotoHeroes()">Edit</a></h5>
+          <div class="row">
+            <div class="col-md-7">
+              <label>Address<span style="color:red;">*</span></label>
+              <h6>{{d.addresses[1].addressLine2}},
+                {{d.addresses[1].streetAddress}},
+                {{d.addresses[1].city}},
+                {{d.addresses[1].state}},
+                {{d.addresses[1].zipCode}}</h6>
+            </div>
+          </div>
+          <hr />
+          <!--- Occupation Details-->
+          <h5>Matrial Status<a style="color:blue;float:right;font-size: 14px;" (click)="gotoHeroes()">Edit</a></h5>
+
+          <div class="row">
+            <div class="col-md-4">
+              <label>Married/Unmarreid</label>
+              <h6>{{d.maritalStatus}}</h6>
+            </div>
+            <div class="col-md-8">
+              <label>If married no.of Living Spouses(more than one)</label>
+              <h6>{{d.moreLivingSpouses}}</h6>
+            </div>
+          </div>
+
+          <hr />
+          <!--- Upload Images Details-->
+          <h5>Uploaded Aadhar<a style="color:blue;float:right;font-size: 14px;" (click)="gotoHeroes()">Edit</a></h5>
+
+          <div class="row">
+            <div class="col-md-6">
+              <label>Aadhar Number<span>*</span></label>
+              <h6>{{d.aadharNumber}}</h6>
+            </div>
+
+            <div class="col-md-6">
+              <!-- <label>Aadhar Image<span>*</span></label><br>
+              <img [src]="transform()" style="width: 10%"> -->
+            </div>
+          </div>
+          <hr>
+
+          <h5>Ex-Serviceman Details<a style="color:blue;float:right;font-size: 14px;" (click)="gotoHeroes()">Edit</a></h5>
+          <div class="row">
+            <div class="col-md-6">
+              <label>Whether you are Ex-Serviceman or not ?<span style="color:red;">*</span></label>
+              <h6>{{d.exServiceMan}}</h6>
+            </div>
+            <div class="col-md-6">
+             <!-- <label>ExServiceMan Image</label><br>
+               <img [src]="exserviceimg()" style="width: 10%"> ----->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <hr>
+
+
+
+    <!--- Examinations Passed-->
+
+
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="card">
+            <div class="card-body">
+              <h5>Examinations Passed<a style="color:blue;float:right;font-size: 14px;" (click)="getdemographic()">Edit</a></h5><br />
+              <h5 class="examination">Reference Data</h5>
+              <div class="row">
+                <div class="col-md-6">
+                  <table class="table table-striped table-responsive">
+                    <thead>
+                      <th>Name</th>
+                      <th>Position</th>
+                      <th>address</th>
+                      <th>email</th>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let ref of refernce">
+                        <td>{{ref.name}}</td>
+                        <td>{{ref.position}}</td>
+                        <td>{{ref.address}}</td>
+                        <td>{{ref.email}}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <hr/>
+              <h5 class="examination">Education Details</h5>
+              <a class="edit2" (click)="getdemographic()">Edit</a>
+              <div class="row">
+                  <div class="col-md-12">
+                    <table class="table table-striped  table-responsive">
+                      <thead>
+                        <th>Qualification</th>
+                        <th>Group</th>
+                        <th>Board</th>
+                        <th>year of passing</th>
+                        <th>Division</th>
+                        <th>Percentage</th>
+                        <th>Distinction</th>
+                        <th>Certificate</th>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let ref of qualification">
+                          <td>{{ref.qualification}}</td>
+                          <td>{{ref.subjects}}</td>
+                          <td>{{ref.board}}</td>
+                          <td>{{ref.yearPassing}}</td>
+                          <td>{{ref.classOfDivision}}</td>
+                          <td>{{ref.percentage}}</td>
+                          <td>{{ref.distinction}}</td>
+                          <td><img [src]="'data:image/jpg;base64,'+ref.certificate"/></td> 
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+                <hr/>
+                 <!-- Experience start -->
+                <div class="row">
+                  
+                    <div class="col-md-7">
+                        <h5 class="examination">experiencedetails</h5>
+                      <table class="table table-striped  table-responsive">
+                        <thead>
+                          <th>nameOfEmployer</th>
+                          <th>designation</th>
+                          <th>employmentType</th>
+                          <th>pay</th>
+                          <th>numberOfYears</th>
+                          <!-- <th>Certificate</th> -->
+                        </thead>
+                        <tbody>
+                          <tr *ngFor="let ref of experience">
+                            <td>{{ref.nameOfEmployer}}</td>
+                            <td>{{ref.designation}}</td>
+                            <td>{{ref.employmentType}}</td>
+                            <td>{{ref.pay}}</td>
+                            <td>{{ref.numberOfYears}}</td>
+                            <!-- <td>{{ref.certificate}}</td> -->
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <div class="col-md-5">
+                        <a class="edit3" (click)="getdemographic()">Edit</a>
+                        <h5 class="examination">achievements</h5>
+                        <table class="table table-striped  table-responsive">
+                          <thead>
+                            <th>achievements list</th>
+                
+                          </thead>
+                          <tbody>
+                            <tr *ngFor="let ref of achivements">
+                              <td>{{ref.achievementDetails}}</td>
+                           
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                  </div>
+                  <!-- Experience end -->
+                  <hr/>
+                  <div class="row">
+                    <div class="col-md-4">
+                        <h5 class="examination">certificates</h5>
+                      <table class="table table-striped  table-responsive">
+                        <thead>
+                          <th>certificateName</th>
+                          <!-- <th>certificateImage</th> -->
+                          <!-- <th>Certificate</th> -->
+                        </thead>
+                        <tbody>
+                          <tr *ngFor="let ref of certificates">
+                            <td>{{ref.certificateName}}</td>
+                            <!-- <td><img [src]="certificateImage" alt="path not correct"></td> -->
+                            <!-- <td>{{ref.certificate}}</td> -->
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <div class="col-md-4">
+                      <h4>Photo image</h4>
+                      <img [src]="'data:image/jpg;base64,'+photoimage" alt="path not correct" style="width:30%;"/>
+                    </div>
+                    <div class="col-md-4">
+                      
+                      <!-- <h4>Signature image</h4>
+                      <span class="signature">Edit</span>
+                      <img [src]="'data:image/jpg;base64,'+signatureimage" alt="path not correct" style="width:30%;"/> -->
+                    </div>
+                </div>
+                <div class="row">
+                  <a href="http://192.168.1.137:8088/report/{{idVerify}}.pdf" target="_blank" class="btn btn-primary"> print preview</a>
+                </div>
+            </div>
+            <hr />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<br />
+
+
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-4"></div>
+    <div class="col-md-4"></div>
+    <div class="col-md-4 text-center">
+      <p style="font-size: 12px">DELIVERY PARTNER</p>
+      <img src="imtac-logo.png" width="120px" height="30px">
+    </div>
+  </div>
+</div><br />

@@ -1,0 +1,291 @@
+<div class="app-title">
+  <div>
+    <h1><i class="fa fa-th-list"></i> Positions</h1>
+  </div>
+  <ul class="app-breadcrumb breadcrumb">
+  </ul>
+</div>
+<div class="row">
+  <div class="col-md-3">
+    <div class="form-group">
+      <input type="text" class="form-control" [(ngModel)]="term" placeholder="Search Here...">
+    </div>
+  </div>
+  <div class="col-md-9">
+    <button type="button" style="margin-bottom:8px" class="btn btn-danger float-right" data-toggle="modal"
+      data-backdrop="static" data-target="#myModal"  (click)="addEmployeementType(position)">Add</button>
+  </div>
+</div>
+<div class="tile">
+
+  <table class="table">
+    <thead>
+      <tr style="font-size:15px">
+        <!-- <th>Id</th> -->
+        <th>Position Name</th>
+        <th>Position Type</th>
+        <th>Position Code</th>
+        <th>Eligibility Criteria</th>
+        <!-- <th>Advt Number</th> -->
+        <th>Reg Start Date</th>
+        <th>Reg End Date</th>
+        <th>Updated Date</th>
+        <th>Updated By</th>
+         <th>Status</th>
+        <th>Edit</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- <tr *ngFor="let data of datas | filter:term |paginate: { itemsPerPage: 10, currentPage: p }"> -->
+      <tr *ngFor="let emp of positionlist| filter:term |paginate: { itemsPerPage: 5, currentPage: p };let i=index">
+        <!-- <td>{{i+1}}</td> -->
+        <td>{{emp?.positionName}}</td>
+        <td>{{emp?.positionTypeName}}</td>
+        <td>{{emp.positionCode}}</td>
+        <td>{{emp.eligibilityCriteria}}</td>
+        <!-- <td>{{emp.advtNumber}}</td> -->
+        <td>{{emp.regStartDate | date: 'dd/MM/yyyy'}}</td>
+        <td>{{emp.regEndDate | date: 'dd/MM/yyyy'}}</td>
+        <td>{{emp.updatedDate | date: 'dd/MM/yyyy'}}</td>
+        <td>{{emp.email}}</td>
+        <td *ngIf="emp.status == 'Active'"><span [ngClass]="{'status1': emp.status=='Inactive', 'status2':emp.status=='Active' }" (click)="statusPositions(emp)">Disable</span></td>
+        <td *ngIf="emp.status == 'Inactive'"><span [ngClass]="{'status1': emp.status=='Inactive', 'status2':emp.status=='Active' }" (click)="statusPositions(emp)">Enable</span></td>
+        <td>
+          <span>
+            <span (click)="editPositions(emp.id)" data-toggle="modal" data-target="#myModal1"
+              class="glyphicon glyphicon-pencil">
+              <i class="fa fa-edit" style="font-size:24px;color:rgb(49, 17, 233)"></i>
+            </span>
+          </span>
+        </td>
+        <td>
+          <!-- <span>
+            <span (click)="deleteSpecialEvent(data.id)" value="delete">
+              <i class="fa fa-trash" style="font-size:24px;color:red"></i>
+            </span>
+          </span> -->
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<pagination-controls (pageChange)="p = $event" class="pull-right"></pagination-controls>
+
+<!-- Add position modal popup-->
+
+<div id="myModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <!-- Modal content-->
+    <form #position="ngForm" (ngSubmit)="createPositions">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Add Position</h4>
+          <button type="button" class="close" data-dismiss="modal" (click)="position.reset()">&times;</button>
+        </div>
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-md-6">
+              <label>Position Name</label>
+              <input type="text" placeholder="Position Name" [(ngModel)]="positionTypeName" name="Positon"
+              class="form-control" #PositionName="ngModel" required>
+              <span style="color:red" *ngIf="PositionName.invalid && PositionName.touched">
+                  <span *ngIf="PositionName.errors.required">
+                      Position Name is required.
+                  </span> 
+                </span>
+               <!-- <span class="text text-danger"
+              *ngIf="addforms.controls['eventName'].invalid && addforms.controls['eventName'].touched">positionTypeName Required</span> -->
+            </div>
+            <div class="col-md-6">
+                <label>Position Type</label>
+              <select class="form-control" [(ngModel)]= "positionTypeId" (change)="getSelectedValueId($event)" #PositionTypeId="ngModel" name="Positon Type" required>
+                  <option [ngValue]="undefined" hidden> Select Position Type</option>  
+                  <option *ngFor="let positionType of datas" [value]="positionType.id">{{positionType.positionTypeName}}</option>
+              </select>
+              <span style="color:red" *ngIf="PositionTypeId.invalid && PositionTypeId.touched">
+                 
+                  <span *ngIf="PositionTypeId.errors.required">
+                      Position Type is required.
+                  </span> 
+                  
+                </span>
+            </div>
+            <!-- <select class="form-control select" formControlName="Industry" (change)="getSelectedOptionText($event)">
+                <option value="">Please select Value</option>  
+                <option *ngFor="let industry of industries" value="{{industry.ID}}">{{industry.Name}}</option>
+              </select> -->
+            
+          </div>
+          <div class="row">
+              <div class="col-md-6">
+                  <label>Advt Number</label>
+                  <input type="text" placeholder="Advt Number" [(ngModel)]="advtNumber" class="form-control" 
+                   #AdvtNum= "ngModel" name="Advt" required>
+                  <span style="color:red" *ngIf="AdvtNum.invalid && AdvtNum.touched">
+                    <span *ngIf="AdvtNum.errors.required">
+                      Advt Number is required.
+                    </span> 
+                  </span> 
+                </div>
+
+            <div class="col-md-6">
+              <label>Eligibility Criteria</label>
+              <textarea type="" placeholder="Eligibility Criteria" [(ngModel)]="eligibilityCriteria" class="form-control" 
+               #Eligibility="ngModel" name="Eligible" required></textarea>
+              <span style="color:red" *ngIf="Eligibility.invalid && Eligibility.touched">
+                <span *ngIf="Eligibility.errors.required">
+                      Eligibility Criteria is required.
+                </span> 
+              </span> 
+            </div>
+          </div>
+          <div class="row">
+              <div class="col-md-6">
+                  <label>Registration Start Date</label>
+                  <input type="date" placeholder="Registration Start Date" [(ngModel)]="regStartDate"
+                  class="form-control" #RegStartDate="ngModel" name="start" required>
+                  <span style="color:red" *ngIf="RegStartDate.invalid && RegStartDate.touched">
+                    <span *ngIf="RegStartDate.errors.required">
+                        Registration Start Date is required.
+                      </span> 
+                    </span> 
+                </div>
+                <div class="col-md-6">
+                  <label>Registration End Date</label>
+                  <input type="date" placeholder="Registration End Date" [(ngModel)]="regEndDate"
+                  class="form-control" class="form-control" #RegEndDate="ngModel" name="end" required>
+                  <span style="color:red" *ngIf="RegEndDate.invalid && RegEndDate.touched">
+                 
+                      <span *ngIf="RegEndDate.errors.required">
+                        Registration End Date is required.
+                      </span> 
+                      
+                    </span> 
+                </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+                <label>Position Code</label>
+                <input type="text" placeholder="Position Code" [(ngModel)]="positionCodes"
+                class="form-control" #positionCode="ngModel" name="Position Code" required>
+                <span style="color:red" *ngIf="positionCode.invalid && positionCode.touched">
+                  <span *ngIf="positionCode.errors.required">
+                      Position Code is required.
+                    </span> 
+                  </span> 
+              </div>
+        </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" 
+            class="btn btn-primary float-right" id="register" (click)="createPositions()" data-dismiss="modal" [disabled]="position.invalid" >Submit</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div> 
+
+<!-- Add position modal popup-->
+
+<!--update position modal popup-->
+
+<div id="myModal1" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <!-- Modal content-->
+    <form [formGroup]="positionsFrom">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Update Position</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-md-6">
+              <label> Position Name</label>
+              <input type="text" placeholder="Position Name" formControlName="positionName" name="positionName" 
+              class="form-control">
+              <span style="color:red" *ngIf = "positionsFrom.get('positionName').touched && positionsFrom.get('positionName').invalid">
+                  <span *ngIf = "positionsFrom.get('positionName').errors.required">
+                      Position Name is required
+                  </span>
+              </span>
+            </div>
+            <div class="col-md-6">
+              <label>Position Type</label>
+              <select class="form-control" formControlName="positionTypeId" (change)="getSelectedValueId($event)">
+                  <option [ngValue]="undefined" hidden> Select Position Type</option>  
+                  <option *ngFor="let positionType of datas" [value]="positionType.id">{{positionType.positionTypeName}}</option>
+              </select>
+              <span style="color:red" *ngIf = "positionsFrom.get('positionTypeId').touched && positionsFrom.get('positionTypeId').invalid">
+                  <span *ngIf = "positionsFrom.get('positionTypeId').errors.required">
+                      Position Type is required
+                  </span>
+                  </span>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+                <label>Advt Number</label>
+                <input type="text" placeholder="Advt Number" formControlName="advtNumber" name="advtNumber" class="form-control">
+                <span style="color:red" *ngIf = "positionsFrom.get('advtNumber').touched && positionsFrom.get('advtNumber').invalid">
+                    <span *ngIf = "positionsFrom.get('advtNumber').errors.required">
+                        Advt Number is required
+                    </span>
+                    </span>
+            </div>
+            <div class="col-md-6">
+                <label>Eligibility Criteria</label>
+                <textarea placeholder="Eligibility Criteria" formControlName="eligibilityCriteria" name="eligibilityCriteria"
+              class="form-control"></textarea>
+              <span style="color:red" *ngIf = "positionsFrom.get('eligibilityCriteria').touched && positionsFrom.get('eligibilityCriteria').invalid">
+                  <span *ngIf = "positionsFrom.get('eligibilityCriteria').errors.required">
+                      Eligibility Criteria is required
+                  </span>
+              </span>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+                <label>Registration Start Date</label>
+                <input type="date" placeholder="Registration Start Date" formControlName="regStartDate" name="regStartDate"
+                class="form-control">
+                <span style="color:red" *ngIf = "positionsFrom.get('regStartDate').touched && positionsFrom.get('regStartDate').invalid">
+                    <span *ngIf = "positionsFrom.get('regStartDate').errors.required">
+                        Registration Start Date is required
+                    </span>
+                    </span>
+                </div>
+            <div class="col-md-6">
+                <label>Registration End Date</label>
+                <input type="date" placeholder="Registration End Date" formControlName="regEndDate" name="regEndDate"
+                class="form-control">
+                <span style="color:red" *ngIf = "positionsFrom.get('regEndDate').touched && positionsFrom.get('regEndDate').invalid">
+                    <span *ngIf = "positionsFrom.get('regEndDate').errors.required">
+                        Registration End Date is required
+                    </span>
+                    </span>
+              </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+                <label>Position Code</label>
+                <input type="text" placeholder="Position code" formControlName="positionCode" name="positionCode"
+                class="form-control">
+                <span style="color:red" *ngIf = "positionsFrom.get('positionCode').touched && positionsFrom.get('positionCode').invalid">
+                    <span *ngIf = "positionsFrom.get('positionCode').errors.required">
+                        Position code is required
+                    </span>
+                    </span>
+                </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button"  data-dismiss="modal"
+            class="btn btn-primary float-right" id="register" (click)="updatePositions(positionsFrom.value)" [disabled]="positionsFrom.invalid">Update</button>
+        </div>
+       </div>
+    </form>
+  </div>
+</div> 
+
+<!--update position modal popup-->

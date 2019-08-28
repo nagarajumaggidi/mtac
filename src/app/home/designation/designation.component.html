@@ -1,0 +1,129 @@
+<div class="app-title">
+  <div>
+    <h1><i class="fa fa-th-list"></i>Designation</h1>
+  </div>
+  <ul class="app-breadcrumb breadcrumb">
+  </ul>
+</div>
+<div class="row">
+  <div class="col-md-3">
+    <div class="form-group">
+      <input type="text" class="form-control" [(ngModel)]="term" placeholder="Search Here...">
+    </div>
+  </div>
+  <div class="col-md-9">
+    <button type="button" style="margin-bottom:8px" class="btn btn-danger float-right" data-toggle="modal"
+      data-backdrop="static" data-target="#myModal1" (click)="addEmployeementType(createdesignation)">Add</button>
+  </div>
+</div>
+<div class="tile">
+
+  <table class="table">
+    <thead>
+      <tr style="font-size:15px">
+        <!-- <th>Id</th> -->
+        <th>Designation Name</th>
+        <!-- <th>Last UpdatedBy</th> -->
+        <th>Updated Date</th>
+        <th>Updated By</th>
+        <th>Status</th>
+
+        <th>Edit</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- <tr *ngFor="let data of datas | filter:term |paginate: { itemsPerPage: 10, currentPage: p }"> -->
+      <tr *ngFor="let emp of designationList | filter:term | paginate: { itemsPerPage: 6, currentPage: p }">
+        <!-- <td>{{emp.id}}</td> -->
+        <td>{{emp.designationName}}</td>
+        <!-- <td>{{emp.lastUpdatedBy}}</td> -->
+        <td>{{emp.updatedDate}}</td>
+        <td>{{emp.email}}</td>
+        <td *ngIf="emp.status == 'Active'"><span
+            [ngClass]="{'status1': emp.status=='Inactive', 'status2':emp.status=='Active' }"
+            (click)="deletedesignation(emp)">Disable</span></td>
+        <td *ngIf="emp.status == 'Inactive'"><span
+            [ngClass]="{'status1': emp.status=='Inactive', 'status2':emp.status=='Active' }"
+            (click)="deletedesignation(emp)">Enable</span></td>
+        <td>
+          <span>
+            <span (click)="editSpecialevent(emp)" data-toggle="modal" data-target="#myModal"
+              class="glyphicon glyphicon-pencil">
+              <i class="fa fa-edit" style="font-size:24px;color:rgb(49, 17, 233)"></i>
+            </span>
+          </span>
+        </td>
+        <td>
+          <!-- <span>
+              <span (click)="deleteSpecialEvent(data.id)" value="delete">
+                <i class="fa fa-trash" style="font-size:24px;color:red"></i>
+              </span>
+            </span> -->
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<pagination-controls (pageChange)="p = $event" class="pull-right"></pagination-controls>
+
+
+<div id="myModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <form [formGroup]="specialEventForm">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Update Designation</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        <div class="modal-body">
+          <div class="col-md-12">
+            <input type="text" placeholder=" Enter Designation" formControlName="designationname" name="designationname"
+              class="form-control">
+            <span class="text text-danger"
+              *ngIf="specialEventForm.controls['designationname'].invalid && specialEventForm.controls['designationname'].touched">Designation
+              Is Required</span>
+          </div>
+          <input type="text" formControlName="id" name="id" hidden>
+        </div>
+        <div class="modal-footer">
+          <!-- <button type="submit" [disabled]="specialEventForm.invalid" data-dismiss="modal"
+                  class="btn btn-primary float-right" id="register" (click)="saveEvent(specialEventForm)"
+                  *ngIf="addfrm">Submit</button> -->
+          <button type="button" data-dismiss="modal" class="btn btn-primary float-right" id="register"
+            [disabled]="specialEventForm.invalid" (click)="updateEvent(specialEventForm.value)">Update</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+
+<div id="myModal1" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <form [formGroup]="createdesignation">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Add Designation</h4>
+          <button type="button" class="close" data-dismiss="modal" (click)="createdesignation.reset()">&times;</button>
+        </div>
+        <div class="modal-body">
+          <div class="col-md-12">
+            <input type="text" placeholder="Enter Designation" formControlName="designationnames" name="designationnames"
+              class="form-control">
+            <span class="text text-danger"
+              *ngIf="createdesignation.controls['designationnames'].invalid && createdesignation.controls['designationnames'].touched">Designation
+              Is Required</span>
+          </div>
+
+        </div>
+        <div class="modal-footer">
+          <!-- <button type="submit" [disabled]="specialEventForm.invalid" data-dismiss="modal"
+                    class="btn btn-primary float-right" id="register" (click)="saveEvent(specialEventForm)"
+                    *ngIf="addfrm">Submit</button> -->
+          <button type="button" class="btn btn-primary float-right" id="register" [disabled]="createdesignation.invalid"
+            (click)="create(createdesignation.value)" data-dismiss="modal">Submit</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

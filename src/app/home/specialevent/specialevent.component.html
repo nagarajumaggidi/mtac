@@ -1,0 +1,82 @@
+<div class="app-title">
+  <div>
+    <h1><i class="fa fa-th-list"></i> Special Event</h1>
+    <p>Special Events Details</p>
+  </div>
+  <ul class="app-breadcrumb breadcrumb">
+  </ul>
+</div>
+<div class="row">
+    <div class="col-md-3">
+        <div class="form-group">
+            <input type="text" class="form-control" [(ngModel)]="term" placeholder="Search Here...">
+          </div>
+    </div>
+    <div class="col-md-9">
+        <button type="button" style="margin-bottom:8px" class="btn btn-danger float-right" data-toggle="modal" data-backdrop="static" data-target="#myModal"
+        (click)="add(specialEventForm)">Add</button>
+            </div>
+  </div>
+<div class="tile">
+  <h5>Special Event</h5>
+
+ <table class="table" >
+   <thead>
+     <tr style="font-size:15px">
+       <th>Id</th>
+       <th>Event Name</th>
+       <th>Edit</th>
+       <th>Delete</th>
+     </tr>
+   </thead>
+   <tbody>
+     <tr *ngFor = "let data of eventData | filter:term |paginate: { itemsPerPage: 10, currentPage: p }">
+       <td>{{data.id}}</td>
+       <td>{{data.eventName}}</td>
+       <td>
+         <span>
+           <span (click)="editSpecialevent(data)" data-toggle="modal" data-target="#myModal"  class="glyphicon glyphicon-pencil">
+             <i class="fa fa-edit" style="font-size:24px;color:rgb(49, 17, 233)"></i>
+           </span>
+         </span>
+       </td>
+       <td>
+         <span>
+           <span (click)="deleteSpecialEvent(data.id)" value="delete">
+             <i class="fa fa-trash" style="font-size:24px;color:red"></i>
+           </span>
+         </span>
+       </td>
+     </tr>
+   </tbody>
+ </table>
+ </div>
+ <pagination-controls (pageChange)="p = $event" class="pull-right"></pagination-controls>
+
+
+ <div id="myModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+      <!-- Modal content-->
+      <form [formGroup]="specialEventForm">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title">Special Event</h4>
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+          </div>
+          <div class="modal-body">
+            <div class="col-md-12">
+              <input type="text" placeholder="Special Event"  formControlName="eventName" name="eventName" class="form-control">
+              <span class="text text-danger" *ngIf="specialEventForm.controls['eventName'].invalid && specialEventForm.controls['eventName'].touched">Special Event Required</span>
+            </div>
+            <input type="text" formControlName="id" name="id" hidden>
+          </div>
+          <div class="modal-footer">
+            <button type="submit"  [disabled]="specialEventForm.invalid" data-dismiss="modal" class="btn btn-primary float-right" id="register"
+              (click)="saveEvent(specialEventForm)" *ngIf="addfrm">Submit</button>
+            <button type="button" [disabled]="specialEventForm.invalid" data-dismiss="modal" class="btn btn-primary float-right" id="register"
+              (click)="updateEvent(specialEventForm)" *ngIf="updatfrm">Update</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>

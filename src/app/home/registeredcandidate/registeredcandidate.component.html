@@ -1,0 +1,76 @@
+<div class="app-title">
+  <div>
+    <h1><i class="fa fa-th-list"></i> Registered Candidtates</h1>
+  </div>
+  <ul class="app-breadcrumb breadcrumb">
+    <!-- <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li> -->
+
+
+  </ul>
+</div>
+
+<div class="row">
+  <div class="col-md-12">
+    <!-- Trigger the modal with a button -->
+    <!-- Modal -->
+    <div class="row">
+      <div class="col-md-3">
+        <div class="form-group">
+          <input type="text" class="form-control"  [(ngModel)]="term" placeholder="Search Here...">
+        </div>
+      </div>
+      <div class="col-md-9">
+      
+      </div>
+    </div>
+    <div class="tile">
+
+      <!-- <h3 class="tile-title">Registered Candidtates</h3> -->
+      <div>
+        <table class="table ">
+          <thead>
+            <tr>
+              <th>Candidate Name</th>
+              <th>Aadhar Number</th>
+              <th>Email</th>
+              <th>Mobile Number</th>
+              <th>Date Of Birth</th>
+             
+              <th>Status</th>
+              <!---<th>Edit</th>
+              <th>Delete</th>-->
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let x of data | filter:term |paginate: { itemsPerPage: 5, currentPage: p }">
+              <td>{{x.username}}</td>
+              <td>{{x.aadharNumber}}</td>
+              <td>{{x.username}}</td>
+              <td>{{x.mobileNumber}}</td>
+              <td>{{x.dob}}</td>
+              <td *ngIf="x.status == 'Active'"><span [ngClass]="{'status1': x.status=='Inactive', 'status2':x.status=='Active' }" (click)="registerActiveStatus(x)">Disable</span></td>
+              <td *ngIf="x.status == 'Inactive'"><span [ngClass]="{'status1': x.status=='Inactive', 'status2':x.status=='Active' }" (click)="registerActiveStatus(x)">Enable</span></td>
+            <!----<td>
+                <span>
+                  <span (click)="editForm(x)" data-toggle="modal" data-target="#myModal"
+                    class="glyphicon glyphicon-pencil">
+                    <i class="fa fa-edit" style="font-size:24px;color:rgb(49, 17, 233)"></i>
+                  </span>
+                </span>
+              </td>
+              <td>
+                <span>
+                  <span (click)="deleteData(x.id)" value="delete">
+                    <i class="fa fa-trash" style="font-size:24px;color:red"></i>
+                  </span>
+                </span>
+              </td>-->
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+    <pagination-controls (pageChange)="p = $event" class="pull-right"></pagination-controls>
+  </div>
+</div>

@@ -1,0 +1,124 @@
+<div class="app-title">
+  <div>
+    <h1><i class="fa fa-th-list"></i>Application List</h1>
+  </div>
+  <ul class="app-breadcrumb breadcrumb">
+  </ul>
+</div>
+<!-- <form [formGroup]="empform" class="form-inline">
+  <div class="row">
+    <div class="col-md-2">
+    <select class="form-control" name="Cat" required formControlName="positions">
+        <option value="" disabled selected>Position</option>
+        <option *ngFor="let emp of positionlist " [value]="emp.id">{{emp.positionName}}</option>
+      </select>
+      <!-- <div class="form-group">
+      <input type="text" class="form-control" [(ngModel)]="term" placeholder="Search Here...">
+    </div> -
+
+    </div>
+    <div class="col-md-2">
+    <input placeholder="Enter Registered Date" class="textbox-n" type="text" onfocus="(this.type='date')" id="date"
+        class="form-control" formControlName="registerdate">
+      <option *ngFor="let emp of applicationlist"></option>
+    </div>
+    <div class="col-md-2">
+      <div class="form-group">
+        <button class="btn btn-success" (click)="showData(empform.value)">Search</button>
+      </div>
+    </div>
+
+
+
+  </div>
+
+</form> -->
+
+<form class="form-inline"  [formGroup]="empform">
+
+    
+    <div class="form-group" style="margin-left: 20px;text-align: center">
+        <label ><b>Position Name:</b></label>
+        <select class="form-control" name="positions" required formControlName="positions">
+            <option value="" disabled selected>Position</option>
+            <option *ngFor="let emp of positionlist " [value]="emp.id">{{emp.positionName}}</option>
+          </select>
+          <!-- <div class="form-group">
+          <input type="text" class="form-control" [(ngModel)]="term" placeholder="Search Here...">
+        </div> -->
+    
+        </div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+  <div class="form-group"  style="margin-left: 20px;text-align: center">
+    <label ><b>Registration Date:</b></label>
+    <input placeholder="Enter Registered Date" class="textbox-n" type="text" onfocus="(this.type='date')" id="date"
+        class="form-control" formControlName="registerdate">
+      <option *ngFor="let emp of applicationlist"></option>
+  </div>&nbsp;&nbsp;&nbsp;
+  
+  <div class="form-group"  style="margin-left: 20px;text-align: center">
+      <button class="btn btn-primary" (click)="showData(empform.value)">Search</button>
+    </div>
+    
+</form>
+<br>
+<!-- <div class="col-md-3">
+  <div class="form-group">
+    <input type="text" class="form-control" [(ngModel)]="term" placeholder="Search Here...">
+  </div>
+
+</div> 
+@media (min-width: 576px)
+.form-inline .form-control {
+    display: inline-block;
+    width: 200px;
+    vertical-align: middle;
+}-->
+<div class="tile">
+  <div style="float:right">
+    <a class="btn btn-info btn-sm my-0 waves-effect waves-light"
+      href='http://192.168.1.137:8088/report/applications-list.xlsx' role="button">
+      <span class="d-none d-lg-inline-block mr-1" target="_blank">Download As Excel</span>
+      <i class="fa fa-download" aria-hidden="true"></i>
+    </a>
+  </div>
+  <br><br>
+  <table class="table">
+    <thead>
+      <tr style="font-size:15px">
+        <th>Application No</th>
+        <th>Position Code</th>
+        <th> Position Applied For</th>
+        <th>Candidate Name</th>
+        <th>Category</th>
+        <th>Date Of Birth</th>
+        <th>Registration Date</th>
+           </tr>
+    </thead>
+    <tbody>
+      <!-- <tr *ngFor="let data of datas | filter:term |paginate: { itemsPerPage: 10, currentPage: p }"> -->
+      <tr *ngFor="let emp of applicationlist | filter:term | paginate: { itemsPerPage: 6, currentPage: p }">
+        <td>{{emp.applicationNo}}</td>
+        <td>{{emp.possitionCode}}</td>
+        <td>{{emp.possitionAppliedFor}}</td>
+        <td>{{emp.fullName}}</td>
+        <td>{{emp.categoryName}}</td>
+        <td>{{emp.dob}}</td>
+        <td>{{emp.updatedDate}}</td>
+        <td>
+          <!-- <span>
+            <span (click)="deleteSpecialEvent(data.id)" value="delete">
+              <i class="fa fa-trash" style="font-size:24px;color:red"></i>
+            </span>
+          </span> -->
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<div>
+
+</div>
+<br><br>
+
+<pagination-controls (pageChange)="p = $event" class="pull-right"></pagination-controls>

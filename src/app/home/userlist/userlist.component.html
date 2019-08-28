@@ -1,0 +1,48 @@
+<div class="container" *ngIf="getUserListId == null">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header">
+            <h3>Dear {{localuserdata?.candidateName}}</h3>
+        </div>
+        <div class="card-body">
+          <h4 class="text-primary">You haven't applied for any post yet...!!!!</h4>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="container" *ngIf="getUserListId != null">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="table-responsive table_style">
+        <h3>Dear {{localuserdata?.candidateName}}</h3>
+        <div>
+          <h6>This are your applied positions</h6>
+        </div>
+        <table class="table table-bordered table2">
+          <thead>
+            <tr>
+              <th>Application Id</th>
+              <th>Position Applied For</th>
+              <th>Position Code</th>
+              <th>Aadhar</th>
+              <th>Mobile Number</th>
+              <th>Registration End data</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let testvalue of getUserListId;let i=index;">
+              <td><span (click)="existingApp(testvalue.applicationNo)">{{testvalue.applicationNo}}</span></td>
+              <td>{{testvalue.possitionAppliedFor}}</td>
+              <td>{{testvalue.possitionCode}}</td>
+              <td>{{testvalue.aadharNumber}}</td>
+              <td>{{testvalue.mobileNumber}}</td>
+              <td>{{testvalue.regEndDate}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
